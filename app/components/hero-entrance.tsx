@@ -7,11 +7,15 @@ import {
   HERO_VIDEO_QUERY,
   VIDEO_LERP,
   VIDEO_SCRUB,
+  VIDEO_SEEK_INTERVAL_PHONE,
   VIDEO_SEEK_STEP,
+  VIDEO_SEEK_STEP_PHONE,
   VIDEO_SNAP_PROGRESS,
   heroPinDistance,
+  matchesHeroPhone,
   progressInRange,
   scheduleScrollTriggerRefresh,
+  videoHasDuration,
   whenVideoCanScrub,
 } from "../lib/scroll-video";
 
@@ -23,6 +27,11 @@ const HERO_VIDEOS = {
 const HERO_POSTERS = {
   mobile: "/hero_mobile_poster.jpg",
   landscape: "/hero_desktop_poster.jpg",
+} as const;
+
+const HERO_END_FRAMES = {
+  mobile: "/hero_mobile_end.jpg",
+  landscape: "/hero_desktop_end.jpg",
 } as const;
 
 function pickVideoSrc() {
@@ -37,6 +46,7 @@ export function HeroEntrance() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const wordmarkRef = useRef<HTMLHeadingElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
+  const endStillRef = useRef<HTMLDivElement>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
 
   useEffect(() => {
@@ -53,7 +63,10 @@ export function HeroEntrance() {
     const overlay = overlayRef.current;
     const wordmark = wordmarkRef.current;
     const cue = cueRef.current;
+    const endStill = endStillRef.current;
     if (!section || !video || !videoSrc) return;
+
+    let cancelled = false;
 
     video.muted = true;
     video.playsInline = true;
@@ -80,39 +93,61 @@ export function HeroEntrance() {
       }
     };
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const revealEnd = () => {
-        if (!Number.isFinite(video.duration) || video.duration === 0) return;
-        const show = () => {
-          video.style.opacity = "1";
-          video.removeEventListener("seeked", show);
-        };
-        video.style.opacity = "0";
-        video.addEventListener("seeked", show);
-        video.currentTime = video.duration;
-      };
+    const applyStaticCopy = () => {
+      if (overlay) overlay.style.opacity = "1";
+      if (wordmark) wordmark.style.opacity = "1";
+      if (cue) cue.style.opacity = "1";
+    };
 
-      if (video.readyState >= 1) {
-        revealEnd();
-      } else {
-        video.addEventListener("loadedmetadata", revealEnd, { once: true });
-      }
+    const clearStaticCopy = () => {
+      overlay?.style.removeProperty("opacity");
+      wordmark?.style.removeProperty("opacity");
+      cue?.style.removeProperty("opacity");
+    };
+
+    // Set as a background so the still is only fetched when the fallback is used.
+    const showEndFrame = () => {
+      if (!endStill) return;
+      const src =
+        videoSrc === HERO_VIDEOS.landscape
+          ? HERO_END_FRAMES.landscape
+          : HERO_END_FRAMES.mobile;
+      endStill.style.backgroundImage = `url("${src}")`;
+    };
+
+    const hideEndFrame = () => {
+      endStill?.style.removeProperty("background-image");
+    };
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (reducedMotion) {
+      applyStaticCopy();
+      showEndFrame();
       return () => {
-        video.removeEventListener("loadedmetadata", revealEnd);
-        video.style.removeProperty("opacity");
+        cancelled = true;
+        clearStaticCopy();
+        hideEndFrame();
       };
     }
 
     let ctx: gsap.Context | undefined;
-    let cancelled = false;
+    let mode: "idle" | "scrub" | "static" = "idle";
     let raf = 0;
     let targetTime = 0;
     let displayTime = 0;
+    let lastSeekAt = 0;
+    const phone = matchesHeroPhone();
+    const seekStep = phone ? VIDEO_SEEK_STEP_PHONE : VIDEO_SEEK_STEP;
+    const seekInterval = phone ? VIDEO_SEEK_INTERVAL_PHONE : 0;
 
-    const tick = () => {
+    const tick = (now: number) => {
       if (targetTime <= 0) {
         displayTime = 0;
         if (!video.seeking && video.currentTime !== 0) {
+          lastSeekAt = now;
           video.currentTime = 0;
         }
       } else {
@@ -120,18 +155,42 @@ export function HeroEntrance() {
         if (
           !video.seeking &&
           Number.isFinite(displayTime) &&
-          Math.abs(video.currentTime - displayTime) > VIDEO_SEEK_STEP
+          Math.abs(video.currentTime - displayTime) > seekStep &&
+          now - lastSeekAt >= seekInterval
         ) {
+          lastSeekAt = now;
           video.currentTime = displayTime;
         }
       }
       raf = requestAnimationFrame(tick);
     };
 
+    /**
+     * `permanent` locks the hero to the end still. A provisional fallback leaves
+     * `mode` idle so a late `loadedmetadata` can still hand over to scrubbing.
+     */
+    const showStaticHero = (permanent: boolean) => {
+      if (cancelled || mode === "static") return;
+      if (permanent) mode = "static";
+      cancelAnimationFrame(raf);
+      raf = 0;
+      ctx?.revert();
+      ctx = undefined;
+      applyStaticCopy();
+      showEndFrame();
+    };
+
     const init = async () => {
-      if (cancelled || !Number.isFinite(video.duration) || video.duration === 0) {
+      if (cancelled || mode !== "idle") return;
+
+      if (!videoHasDuration(video)) {
+        showStaticHero(false);
         return;
       }
+
+      mode = "scrub";
+      clearStaticCopy();
+      hideEndFrame();
 
       try {
         await video.play();
@@ -140,23 +199,25 @@ export function HeroEntrance() {
         video.pause();
       }
 
-      if (cancelled) return;
+      if (cancelled || mode !== "scrub") return;
 
       video.currentTime = 0;
       targetTime = 0;
       displayTime = 0;
+
       applyOverlay(0);
       const playhead = { time: 0 };
+      const duration = video.duration;
 
       ctx?.revert();
       ctx = gsap.context(() => {
         gsap.to(playhead, {
-          time: video.duration,
+          time: duration,
           ease: "none",
           scrollTrigger: {
             trigger: section,
             start: "top top",
-            end: () => `+=${heroPinDistance(video.duration)}`,
+            end: () => `+=${heroPinDistance(duration)}`,
             pin: true,
             scrub: VIDEO_SCRUB,
             anticipatePin: 1,
@@ -186,10 +247,16 @@ export function HeroEntrance() {
       scheduleScrollTriggerRefresh();
     };
 
-    window.addEventListener("orientationchange", onOrientation);
+    const onVideoError = () => {
+      showStaticHero(true);
+    };
 
-    const cancelReady = whenVideoCanScrub(video, () => {
-      void init();
+    window.addEventListener("orientationchange", onOrientation);
+    video.addEventListener("error", onVideoError);
+
+    const cancelReady = whenVideoCanScrub(video, (scrubbable) => {
+      if (scrubbable) void init();
+      else showStaticHero(false);
     });
 
     return () => {
@@ -197,10 +264,10 @@ export function HeroEntrance() {
       cancelReady();
       cancelAnimationFrame(raf);
       window.removeEventListener("orientationchange", onOrientation);
+      video.removeEventListener("error", onVideoError);
       ctx?.revert();
-      overlay?.style.removeProperty("opacity");
-      wordmark?.style.removeProperty("opacity");
-      cue?.style.removeProperty("opacity");
+      clearStaticCopy();
+      hideEndFrame();
     };
   }, [videoSrc]);
 
@@ -226,6 +293,12 @@ export function HeroEntrance() {
           aria-hidden
         />
       ) : null}
+
+      <div
+        ref={endStillRef}
+        className="hero-end-still pointer-events-none absolute inset-0 h-full w-full"
+        aria-hidden
+      />
 
       <div className="hero-film-grade pointer-events-none absolute inset-0 z-[1]" aria-hidden />
 

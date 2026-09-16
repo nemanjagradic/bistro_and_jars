@@ -87,6 +87,11 @@ body {
   object-position: center center;
 }
 
+.hero-end-still {
+  background-position: center center;
+  background-size: cover;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-scroll-cue-line {
     animation: none;

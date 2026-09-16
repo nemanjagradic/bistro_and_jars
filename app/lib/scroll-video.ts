@@ -12,14 +12,25 @@ export const HERO_VIDEO_QUERY = "(max-width: 639px)";
 export const VIDEO_SCRUB = 0.78;
 export const VIDEO_LERP = 0.18;
 export const VIDEO_SEEK_STEP = 1 / 30;
+export const VIDEO_SEEK_STEP_PHONE = 1 / 15;
+export const VIDEO_SEEK_INTERVAL_PHONE = 1000 / 15;
 export const VIDEO_SNAP_PROGRESS = 0.008;
 
+export function videoHasDuration(video: HTMLVideoElement) {
+  return Number.isFinite(video.duration) && video.duration > 0;
+}
+
+/**
+ * Calls `onReady(true)` once the video exposes a duration and can be scrubbed.
+ * May fire earlier with `onReady(false)` when metadata is slow, so the caller can
+ * show a fallback; listeners stay attached and a later `onReady(true)` upgrades it.
+ */
 export function whenVideoCanScrub(
   video: HTMLVideoElement,
-  onReady: () => void,
+  onReady: (scrubbable: boolean) => void,
 ) {
-  if (video.readyState >= 4) {
-    onReady();
+  if (video.readyState >= 1 && videoHasDuration(video)) {
+    onReady(true);
     return () => {};
   }
 
@@ -28,30 +39,46 @@ export function whenVideoCanScrub(
   const finish = () => {
     if (done) return;
     done = true;
-    video.removeEventListener("canplaythrough", finish);
-    video.removeEventListener("canplay", onCanPlay);
-    window.clearTimeout(timer);
-    onReady();
+    cleanup();
+    onReady(videoHasDuration(video));
+  };
+
+  const onMeta = () => {
+    if (videoHasDuration(video)) finish();
   };
 
   const onCanPlay = () => {
-    if (video.readyState >= 3) finish();
+    if (video.readyState >= 3 && videoHasDuration(video)) finish();
   };
 
-  video.addEventListener("canplaythrough", finish);
+  const cleanup = () => {
+    video.removeEventListener("loadedmetadata", onMeta);
+    video.removeEventListener("canplaythrough", onCanPlay);
+    video.removeEventListener("canplay", onCanPlay);
+    video.removeEventListener("error", finish);
+    window.clearTimeout(timer);
+  };
+
+  video.addEventListener("loadedmetadata", onMeta);
+  video.addEventListener("canplaythrough", onCanPlay);
   video.addEventListener("canplay", onCanPlay);
-  timer = window.setTimeout(finish, 2500);
+  video.addEventListener("error", finish);
+  timer = window.setTimeout(() => {
+    if (!done) onReady(false);
+  }, 2500);
 
   return () => {
     done = true;
-    video.removeEventListener("canplaythrough", finish);
-    video.removeEventListener("canplay", onCanPlay);
-    window.clearTimeout(timer);
+    cleanup();
   };
 }
 
 export function matchesMobile() {
   return window.matchMedia(MOBILE_QUERY).matches;
+}
+
+export function matchesHeroPhone() {
+  return window.matchMedia(HERO_VIDEO_QUERY).matches;
 }
 
 let refreshTimer = 0;
@@ -75,6 +102,11 @@ if (typeof window !== "undefined") {
   }
 }
 
+/**
+ * Pin length in pixels. Keyed off MOBILE_QUERY (767px) rather than the narrower
+ * HERO_VIDEO_QUERY (639px), so the 640–767 band plays the landscape clip over the
+ * shorter mobile pin.
+ */
 export function heroPinDistance(duration: number) {
   const mobile = matchesMobile();
   const viewports = mobile
