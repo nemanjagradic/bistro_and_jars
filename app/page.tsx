@@ -1,4 +1,5 @@
 import { HeroEntrance } from "./components/hero-entrance";
+import { ShakeProcess } from "./components/shake-process";
 
 export default function Home() {
   return (
@@ -33,6 +34,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <ShakeProcess />
     </main>
   );
 }

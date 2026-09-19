@@ -83,12 +83,17 @@ export function matchesHeroPhone() {
 
 let refreshTimer = 0;
 
+export function refreshScrollTriggersNow() {
+  window.clearTimeout(refreshTimer);
+  refreshTimer = 0;
+  ScrollTrigger.sort();
+  ScrollTrigger.refresh();
+}
+
 export function scheduleScrollTriggerRefresh() {
   window.clearTimeout(refreshTimer);
   refreshTimer = window.setTimeout(() => {
-    refreshTimer = 0;
-    ScrollTrigger.sort();
-    ScrollTrigger.refresh();
+    refreshScrollTriggersNow();
   }, 150);
 }
 
@@ -112,6 +117,15 @@ export function heroPinDistance(duration: number) {
   const viewports = mobile
     ? Math.min(3, Math.max(2.5, duration * 0.3))
     : Math.min(4.5, Math.max(3.5, duration * 0.4));
+  return viewports * window.innerHeight;
+}
+
+
+export function shakePinDistance(duration: number) {
+  const mobile = matchesMobile();
+  const viewports = mobile
+    ? Math.min(3.2, Math.max(2.6, duration * 0.26))
+    : Math.min(3, Math.max(2.4, duration * 0.24));
   return viewports * window.innerHeight;
 }
 

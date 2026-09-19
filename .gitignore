@@ -40,5 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# client source pack (private; keep local only)
 Bistro_and_Jars_Assets/
+
+docs/PRD.md
