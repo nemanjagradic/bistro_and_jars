@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { DayPicker } from "react-day-picker";
 import { enGB, srLatn } from "react-day-picker/locale";
 import {
@@ -50,6 +51,7 @@ type FormErrors = Partial<
 
 const MESSAGE_MAX = 500;
 const CHAR_COUNTER_THRESHOLD = 450;
+const PICKER_SHEET_QUERY = "(max-width: 639px)";
 
 function CalendarIcon() {
   return (
@@ -107,9 +109,11 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
   );
   const [now, setNow] = useState(() => new Date());
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerSheet, setPickerSheet] = useState(false);
   const [inquiryCardHeight, setInquiryCardHeight] = useState<number>();
   const infoCardRef = useRef<HTMLDivElement>(null);
   const pickerRef = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const pickerTriggerRef = useRef<HTMLButtonElement>(null);
   const pickerId = useId();
 
@@ -138,27 +142,69 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
   }, []);
 
   useEffect(() => {
+    const media = window.matchMedia(PICKER_SHEET_QUERY);
+    const sync = () => setPickerSheet(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
     if (!pickerOpen) return;
 
     const onPointerDown = (event: PointerEvent) => {
-      if (!pickerRef.current?.contains(event.target as Node)) closePicker();
+      const target = event.target as Node;
+      if (
+        pickerRef.current?.contains(target) ||
+        popoverRef.current?.contains(target)
+      ) {
+        return;
+      }
+      closePicker();
     };
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") closePicker(true);
     };
 
-    const isSheet = window.matchMedia("(max-width: 639px)").matches;
-    const previousOverflow = document.body.style.overflow;
-    if (isSheet) document.body.style.overflow = "hidden";
-
-    document.addEventListener("pointerdown", onPointerDown);
+    const frame = window.requestAnimationFrame(() => {
+      document.addEventListener("pointerdown", onPointerDown);
+    });
     window.addEventListener("keydown", onKey);
+
+    const scrollY = window.scrollY;
+    const body = document.body;
+    const previous = {
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+    };
+    if (pickerSheet) {
+      body.style.overflow = "hidden";
+      body.style.position = "fixed";
+      body.style.top = `-${scrollY}px`;
+      body.style.left = "0";
+      body.style.right = "0";
+      body.style.width = "100%";
+    }
+
     return () => {
+      window.cancelAnimationFrame(frame);
       document.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("keydown", onKey);
-      if (isSheet) document.body.style.overflow = previousOverflow;
+      if (pickerSheet) {
+        body.style.overflow = previous.overflow;
+        body.style.position = previous.position;
+        body.style.top = previous.top;
+        body.style.left = previous.left;
+        body.style.right = previous.right;
+        body.style.width = previous.width;
+        window.scrollTo(0, scrollY);
+      }
     };
-  }, [pickerOpen, closePicker]);
+  }, [pickerOpen, pickerSheet, closePicker]);
 
   const earliestDate = useMemo(() => getEarliestBookableDate(now), [now]);
   const timeSlots = useMemo(
@@ -311,6 +357,98 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
     </>
   );
 
+  const pickerPopover = (
+    <div
+      ref={popoverRef}
+      id={pickerId}
+      className={`contact-datetime-popover${pickerSheet ? " is-sheet" : ""}`}
+      role="dialog"
+      aria-modal={pickerSheet || undefined}
+      aria-labelledby={`${pickerId}-label`}
+    >
+      <div className="contact-datetime-head">
+        <span className="contact-label">
+          {selectedDate ? copy.selectTime : copy.selectDate}
+        </span>
+        <button
+          type="button"
+          className="contact-datetime-close"
+          aria-label={copy.pickerClose}
+          onClick={() => closePicker(true)}
+        >
+          <CloseIcon />
+        </button>
+      </div>
+
+      {!selectedDate ? (
+        <p className="contact-picker-rule">{copy.pickerTimeRule}</p>
+      ) : null}
+
+      <div className="contact-calendar-inline">
+        <DayPicker
+          mode="single"
+          locale={dayPickerLocale}
+          selected={selectedDate}
+          onSelect={(date) => {
+            setSelectedDate(date);
+            setSelectedHour("");
+          }}
+          disabled={{ before: earliestDate }}
+          weekStartsOn={1}
+          defaultMonth={selectedDate ?? earliestDate}
+        />
+      </div>
+
+      {selectedDate ? (
+        timeSlots.length > 0 ? (
+          <div className="contact-time-grid" role="group" aria-label={copy.fieldTime}>
+            {timeSlots.map((slot) => (
+              <button
+                key={slot.hour}
+                type="button"
+                className={`contact-time-pill${
+                  selectedHour === slot.hour ? " is-active" : ""
+                }`}
+                aria-pressed={selectedHour === slot.hour}
+                onClick={() => {
+                  setSelectedHour(slot.hour);
+                  setErrors((prev) => ({
+                    ...prev,
+                    date: undefined,
+                    time: undefined,
+                  }));
+                  closePicker(true);
+                }}
+              >
+                {slot.label}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className="contact-time-hint">{copy.noTimeSlots}</p>
+        )
+      ) : null}
+    </div>
+  );
+
+  const pickerLayer =
+    pickerOpen && pickerSheet
+      ? createPortal(
+          <div className="contact-datetime-sheet">
+            <button
+              type="button"
+              className="contact-datetime-backdrop"
+              aria-label={copy.pickerClose}
+              onClick={() => closePicker(true)}
+            />
+            {pickerPopover}
+          </div>,
+          document.body,
+        )
+      : pickerOpen
+        ? pickerPopover
+        : null;
+
   return (
     <section
       id={id}
@@ -372,12 +510,6 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
                   onSubmit={handleSubmit}
                   noValidate
                 >
-                  {tab === "reservation" ? (
-                    <p className="contact-disclaimer">
-                      {copy.reservationDisclaimer}
-                    </p>
-                  ) : null}
-
                   {contactFields}
 
                   {tab === "inquiry" ? (
@@ -439,89 +571,7 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
                             <CalendarIcon />
                           </button>
 
-                          {pickerOpen ? (
-                            <div
-                              id={pickerId}
-                              className="contact-datetime-popover"
-                              role="dialog"
-                              aria-labelledby={`${pickerId}-label`}
-                            >
-                              <div className="contact-datetime-head">
-                                <span className="contact-label">
-                                  {selectedDate
-                                    ? copy.selectTime
-                                    : copy.selectDate}
-                                </span>
-                                <button
-                                  type="button"
-                                  className="contact-datetime-close"
-                                  aria-label={copy.pickerClose}
-                                  onClick={() => closePicker(true)}
-                                >
-                                  <CloseIcon />
-                                </button>
-                              </div>
-
-                              {!selectedDate ? (
-                                <p className="contact-picker-rule">
-                                  {copy.pickerTimeRule}
-                                </p>
-                              ) : null}
-
-                              <div className="contact-calendar-inline">
-                                <DayPicker
-                                  mode="single"
-                                  locale={dayPickerLocale}
-                                  selected={selectedDate}
-                                  onSelect={(date) => {
-                                    setSelectedDate(date);
-                                    setSelectedHour("");
-                                  }}
-                                  disabled={{ before: earliestDate }}
-                                  weekStartsOn={1}
-                                  defaultMonth={selectedDate ?? earliestDate}
-                                />
-                              </div>
-
-                              {selectedDate ? (
-                                timeSlots.length > 0 ? (
-                                  <div
-                                    className="contact-time-grid"
-                                    role="group"
-                                    aria-label={copy.fieldTime}
-                                  >
-                                    {timeSlots.map((slot) => (
-                                      <button
-                                        key={slot.hour}
-                                        type="button"
-                                        className={`contact-time-pill${
-                                          selectedHour === slot.hour
-                                            ? " is-active"
-                                            : ""
-                                        }`}
-                                        aria-pressed={selectedHour === slot.hour}
-                                        onClick={() => {
-                                          setSelectedHour(slot.hour);
-                                          setErrors((prev) => ({
-                                            ...prev,
-                                            date: undefined,
-                                            time: undefined,
-                                          }));
-                                          closePicker(true);
-                                        }}
-                                      >
-                                        {slot.label}
-                                      </button>
-                                    ))}
-                                  </div>
-                                ) : (
-                                  <p className="contact-time-hint">
-                                    {copy.noTimeSlots}
-                                  </p>
-                                )
-                              ) : null}
-                            </div>
-                          ) : null}
+                          {pickerLayer}
 
                           {errors.date || errors.time ? (
                             <p className="contact-error">
@@ -585,6 +635,11 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
                   )}
 
                   <div className="contact-form-footer">
+                    {tab === "reservation" ? (
+                      <p className="contact-disclaimer">
+                        {copy.reservationDisclaimer}
+                      </p>
+                    ) : null}
                     <button
                       type="submit"
                       className="site-cta-pill site-cta-pill-fill contact-submit"

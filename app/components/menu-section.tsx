@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   categoryLabel,
   formatItemLabel,
@@ -13,39 +14,79 @@ import type { MenuCategory as MenuCategoryData } from "../lib/menu";
 import { ScrollReveal, useScrollReveal } from "./scroll-reveal";
 import { useLanguage } from "./language-provider";
 
-function MenuCategoryBlock({
+function MenuItems({
   category,
   locale,
 }: {
   category: MenuCategoryData;
   locale: "sr" | "en";
 }) {
-  const ref = useScrollReveal<HTMLElement>();
   const items = getItemsByCategory(category.categorySr);
 
   return (
-    <section ref={ref} className="menu-category scroll-reveal">
-      <h2 className="menu-category-title">{categoryLabel(category, locale)}</h2>
-      <hr className="menu-divider" />
-      <ul>
-        {items.map((item) => {
-          const description = itemDescription(item, locale);
+    <ul>
+      {items.map((item) => {
+        const description = itemDescription(item, locale);
 
-          return (
-            <li key={item.id} className="menu-item-row">
-              <div className="min-w-0">
-                <p className="text-base leading-snug text-ivory">
-                  {formatItemLabel(itemName(item, locale), item.quantity)}
-                </p>
-                {description ? (
-                  <p className="menu-item-desc">{description}</p>
-                ) : null}
-              </div>
-              <p className="menu-item-price">{formatMenuPrice(item.price)}</p>
-            </li>
-          );
-        })}
-      </ul>
+        return (
+          <li key={item.id} className="menu-item-row">
+            <div className="min-w-0">
+              <p className="text-base leading-snug text-ivory">
+                {formatItemLabel(itemName(item, locale), item.quantity)}
+              </p>
+              {description ? (
+                <p className="menu-item-desc">{description}</p>
+              ) : null}
+            </div>
+            <p className="menu-item-price">{formatMenuPrice(item.price)}</p>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function MenuCategoryBlock({
+  category,
+  locale,
+  open,
+  panelId,
+  onToggle,
+}: {
+  category: MenuCategoryData;
+  locale: "sr" | "en";
+  open: boolean;
+  panelId: string;
+  onToggle: () => void;
+}) {
+  const ref = useScrollReveal<HTMLElement>();
+  const title = categoryLabel(category, locale);
+
+  return (
+    <section
+      ref={ref}
+      className="menu-category scroll-reveal"
+      data-open={open ? "true" : "false"}
+    >
+      <h2 className="menu-category-title menu-category-title--static">
+        {title}
+      </h2>
+      <h2 className="menu-category-title menu-category-title--toggle">
+        <button
+          type="button"
+          className="menu-category-toggle"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={onToggle}
+        >
+          <span>{title}</span>
+          <span className="menu-category-chevron" aria-hidden="true" />
+        </button>
+      </h2>
+      <div id={panelId} className="menu-category-panel">
+        <hr className="menu-divider" />
+        <MenuItems category={category} locale={locale} />
+      </div>
     </section>
   );
 }
@@ -53,6 +94,11 @@ function MenuCategoryBlock({
 export function MenuSection() {
   const { copy, locale } = useLanguage();
   const categories = getMenuCategories();
+  const [openCategory, setOpenCategory] = useState<string | null>(null);
+
+  function toggleCategory(categorySr: string) {
+    setOpenCategory((current) => (current === categorySr ? null : categorySr));
+  }
 
   return (
     <section aria-labelledby="menu-heading">
@@ -67,11 +113,14 @@ export function MenuSection() {
         </ScrollReveal>
 
         <div className="menu-columns">
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <MenuCategoryBlock
               key={category.categorySr}
               category={category}
               locale={locale}
+              open={openCategory === category.categorySr}
+              panelId={`menu-category-panel-${index}`}
+              onToggle={() => toggleCategory(category.categorySr)}
             />
           ))}
         </div>

@@ -132,7 +132,8 @@ export function GalleryLightbox({
 
   const stageLayers =
     shown && shown.id !== photo.id ? [shown, photo] : [photo];
-  const backdropLayers = [photo];
+  const backdropLayers =
+    backdrop && backdrop.id !== photo.id ? [backdrop, photo] : [photo];
   const neighbors = [prevPhoto, nextPhoto].filter(
     (neighbor, i, list): neighbor is GalleryPhoto =>
       !!neighbor &&

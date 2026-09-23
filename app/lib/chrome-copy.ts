@@ -44,7 +44,7 @@ export const CHROME = {
     tabInquiry: "Upit",
     tabReservation: "Rezervacija proslave",
     reservationDisclaimer:
-      "Kad pošaljete rezervaciju, poruka stiže na WhatsApp kafića. Javićemo vam se što pre, a termin je rezervisan tek kad ga potvrdimo. Za običan sto rezervacija nije potrebna, samo svratite.",
+      "Poruka stiže na WhatsApp kafića. Odgovaramo u najkraćem roku.",
     pickerTimeRule: "Termini od sutra, svakog punog sata 08–21 h.",
     fieldName: "Ime i prezime",
     fieldPhone: "Telefon",
@@ -113,7 +113,7 @@ export const CHROME = {
     tabInquiry: "Inquiry",
     tabReservation: "Celebration booking",
     reservationDisclaimer:
-      "When you send a reservation, the message goes to the café's WhatsApp. We'll get back to you as soon as we can, and the time is booked only once we confirm it. No booking is needed for a regular table, just drop by.",
+      "Your message goes to the café's WhatsApp. We reply as soon as possible.",
     pickerTimeRule: "Slots from tomorrow, on the hour 08:00–21:00.",
     fieldName: "Full name",
     fieldPhone: "Phone",
