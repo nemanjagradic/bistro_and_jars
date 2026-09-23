@@ -1,0 +1,67 @@
+[
+  {
+    "order": 1,
+    "sr": "Slatke tegle",
+    "en": "Sweet jars"
+  },
+  {
+    "order": 2,
+    "sr": "Kafa",
+    "en": "Coffee"
+  },
+  {
+    "order": 3,
+    "sr": "Tople čokolade",
+    "en": "Hot chocolates"
+  },
+  {
+    "order": 4,
+    "sr": "Čajevi i zimski napici",
+    "en": "Tea & winter drinks"
+  },
+  {
+    "order": 5,
+    "sr": "Frappe i šejkovi",
+    "en": "Frappés & shakes"
+  },
+  {
+    "order": 6,
+    "sr": "Domaći iced tea",
+    "en": "Homemade iced tea"
+  },
+  {
+    "order": 7,
+    "sr": "Ceđeni sokovi",
+    "en": "Fresh juices"
+  },
+  {
+    "order": 8,
+    "sr": "Flaširani sokovi",
+    "en": "Soft drinks"
+  },
+  {
+    "order": 9,
+    "sr": "Pivo i cider",
+    "en": "Beer & cider"
+  },
+  {
+    "order": 10,
+    "sr": "Vino",
+    "en": "Wine"
+  },
+  {
+    "order": 11,
+    "sr": "Kokteli",
+    "en": "Cocktails"
+  },
+  {
+    "order": 12,
+    "sr": "Žestoka pića",
+    "en": "Spirits"
+  },
+  {
+    "order": 13,
+    "sr": "Grickalice",
+    "en": "Snacks"
+  }
+]

@@ -10,6 +10,7 @@ import {
   VIDEO_SEEK_STEP,
   VIDEO_SEEK_STEP_PHONE,
   VIDEO_SNAP_PROGRESS,
+  markHomePinReady,
   matchesHeroPhone,
   refreshScrollTriggersNow,
   scheduleScrollTriggerRefresh,
@@ -17,72 +18,48 @@ import {
   videoHasDuration,
   whenVideoCanScrub,
 } from "../lib/scroll-video";
+import { HOME_COPY } from "../lib/home-copy";
+import { useLanguage } from "./language-provider";
 
-type Step = {
-  at: number;
-  label: string;
-  line: string;
-};
+type StepCopy = (typeof HOME_COPY)["sr"]["shakeSteps"][number];
 
 const SHAKE_VIDEOS = {
-  phone: "/shake_phone.mp4",
-  wide: "/shake_wide.mp4",
+  phone: "/shake/phone.mp4",
+  wide: "/shake/wide.mp4",
 } as const;
 
 const SHAKE_POSTERS = {
-  phone: "/shake_phone_poster.jpg",
-  wide: "/shake_wide_poster.jpg",
+  phone: "/shake/phone-poster.jpg",
+  wide: "/shake/wide-poster.jpg",
 } as const;
 
 const SHAKE_FINISHED = {
-  phone: "/shake_phone_finished.jpg",
-  wide: "/shake_wide_finished.jpg",
+  phone: "/shake/phone-finished.jpg",
+  wide: "/shake/wide-finished.jpg",
 } as const;
 
 const SHAKE_AMBIENTS = [
-  "/shake_wide_ambient_01.jpg",
-  "/shake_wide_ambient_02.jpg",
-  "/shake_wide_ambient_03.jpg",
-  "/shake_wide_ambient_04.jpg",
-  "/shake_wide_ambient_05.jpg",
+  "/shake/ambient-01.jpg",
+  "/shake/ambient-02.jpg",
+  "/shake/ambient-03.jpg",
+  "/shake/ambient-04.jpg",
+  "/shake/ambient-05.jpg",
 ] as const;
 
-/** Cut times shared by shake_phone.mp4 and shake_wide.mp4 (same 21.1s timeline). */
-const STEPS: Step[] = [
-  {
-    at: 1.2,
-    label: "Osnova",
-    line: "Sladoled od vanile, mleko i slatka pavlaka.",
-  },
-  {
-    at: 4.8,
-    label: "Tegla",
-    line: "Prvi deo dekoracije: čokolada iznutra, Nutella po obodu, pa šarene mrvice.",
-  },
-  {
-    at: 10.9,
-    label: "Punjenje",
-    line: "Šejk se sipa u pripremljenu teglu.",
-  },
-  {
-    at: 13.6,
-    label: "Kruna",
-    line: "Šlag na vrh, pa Kinder čokolada i Kinder Surprise jaje.",
-  },
-  {
-    at: 18.0,
-    label: "Završni detalj",
-    line: "Čokoladni preliv i šarene mrvice preko šlaga — Monster Shake je gotov.",
-  },
-];
+/**
+ * Cut times shared by shake/phone.mp4 and shake/wide.mp4 (same 21.1s timeline).
+ * One entry per step in HOME_COPY[locale].shakeSteps, in the same order.
+ */
+const STEP_AT = [1.2, 4.8, 10.9, 13.6, 18.0] as const;
+const LAST_STEP = STEP_AT.length - 1;
 
-/** One wallpaper per caption. Beat 0 starts at t=0 so the field is ready before Osnova. */
+/** One wallpaper per caption. Beat 0 starts at t=0 so the field is ready before the first step. */
 const AMBIENT_AT = [0, 4.8, 10.9, 13.6, 18.0] as const;
 
 function activeStepIndex(time: number) {
   let idx = 0;
-  for (let i = 0; i < STEPS.length; i++) {
-    if (time >= STEPS[i].at) idx = i;
+  for (let i = 0; i < STEP_AT.length; i++) {
+    if (time >= STEP_AT[i]) idx = i;
   }
   return idx;
 }
@@ -116,9 +93,9 @@ function StepDashes({
       className={`shake-step-dashes${className ? ` ${className}` : ""}`}
       aria-hidden
     >
-      {STEPS.map((step, i) => (
+      {STEP_AT.map((at, i) => (
         <span
-          key={step.label}
+          key={at}
           className={`shake-step-dash${i === activeStep ? " is-active" : ""}`}
         />
       ))}
@@ -127,10 +104,12 @@ function StepDashes({
 }
 
 function StepCaption({
+  steps,
   activeStep,
   kind,
   className = "",
 }: {
+  steps: readonly StepCopy[];
   activeStep: number;
   kind: "label" | "line";
   className?: string;
@@ -144,9 +123,9 @@ function StepCaption({
     <div
       className={`shake-step-swap${kind === "line" ? " shake-step-swap--line" : ""}${className ? ` ${className}` : ""}`}
     >
-      {STEPS.map((step, i) => (
+      {steps.map((step, i) => (
         <p
-          key={step.label}
+          key={STEP_AT[i]}
           className={`${typeClass}${i === activeStep ? " is-active" : ""}`}
           aria-hidden={i !== activeStep}
         >
@@ -166,6 +145,10 @@ function ShakeCopy({
   mobile?: boolean;
   headingId?: string;
 }) {
+  const { locale } = useLanguage();
+  const copy = HOME_COPY[locale];
+  const steps = copy.shakeSteps;
+
   return (
     <div className="relative">
       <h2
@@ -176,26 +159,31 @@ function ShakeCopy({
       </h2>
       <span className="shake-title-rule" aria-hidden />
       <p className="font-heading mt-3 text-lg italic leading-snug text-ivory/85 sm:text-xl lg:mt-4 xl:text-2xl">
-        Od prvog sastojka do poslednjeg detalja.
+        {copy.shakeSubtitle}
       </p>
       <StepDashes activeStep={activeStep} className="mt-5 lg:mt-6" />
 
       {mobile ? (
         <div className="mt-4" aria-live="polite">
-          <StepCaption activeStep={activeStep} kind="label" />
-          <StepCaption activeStep={activeStep} kind="line" className="mt-2" />
+          <StepCaption steps={steps} activeStep={activeStep} kind="label" />
+          <StepCaption
+            steps={steps}
+            activeStep={activeStep}
+            kind="line"
+            className="mt-2"
+          />
         </div>
       ) : (
         <div className="mt-10 xl:mt-12">
           <ol
             className="space-y-4 xl:space-y-5"
-            aria-label="Koraci pripreme"
+            aria-label={copy.shakeStepsLabel}
           >
-            {STEPS.map((step, i) => {
+            {steps.map((step, i) => {
               const active = i === activeStep;
               return (
                 <li
-                  key={step.label}
+                  key={STEP_AT[i]}
                   className="grid grid-cols-[1.375rem_1fr] items-baseline gap-x-3 xl:grid-cols-[1.625rem_1fr] xl:gap-x-4"
                   aria-current={active ? "step" : undefined}
                 >
@@ -219,7 +207,7 @@ function ShakeCopy({
             })}
           </ol>
           <div className="mt-8 xl:mt-10" aria-live="polite">
-            <StepCaption activeStep={activeStep} kind="line" />
+            <StepCaption steps={steps} activeStep={activeStep} kind="line" />
           </div>
         </div>
       )}
@@ -228,6 +216,7 @@ function ShakeCopy({
 }
 
 export function ShakeProcess() {
+  const { locale } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const filmRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -244,6 +233,10 @@ export function ShakeProcess() {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches,
     );
   }, []);
+
+  useEffect(() => {
+    if (reducedMotion) markHomePinReady("shake");
+  }, [reducedMotion]);
 
   useEffect(() => {
     const media = window.matchMedia(HERO_VIDEO_QUERY);
@@ -327,9 +320,10 @@ export function ShakeProcess() {
       ctx?.revert();
       ctx = undefined;
       setHoldFinished(true);
-      setActiveStep(STEPS.length - 1);
+      setActiveStep(LAST_STEP);
       setActiveAmbient(SHAKE_AMBIENTS.length - 1);
       if (film) film.style.opacity = "1";
+      markHomePinReady("shake");
     };
 
     const init = async () => {
@@ -385,6 +379,7 @@ export function ShakeProcess() {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(tick);
       refreshScrollTriggersNow();
+      markHomePinReady("shake");
 
       try {
         await video.play();
@@ -423,6 +418,8 @@ export function ShakeProcess() {
     const finishedSrc = assets?.finished ?? SHAKE_FINISHED.phone;
 
     return (
+      <>
+      <div className="gold-rule-line" aria-hidden="true" />
       <section
         aria-labelledby="shake-heading"
         className="relative bg-background lg:min-h-dvh"
@@ -445,22 +442,25 @@ export function ShakeProcess() {
               aria-hidden
             />
             <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
-              <ShakeCopy activeStep={STEPS.length - 1} headingId="shake-heading" />
+              <ShakeCopy activeStep={LAST_STEP} headingId="shake-heading" />
             </div>
           </div>
           <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden lg:order-1 lg:mx-0 lg:h-[86vh] lg:w-auto lg:max-w-none lg:shrink-0">
             <img
               src={finishedSrc}
-              alt="Monster Shake Kinder u tegli, sa šlagom i Kinder jajetom"
+              alt={HOME_COPY[locale].shakeFinishedAlt}
               className="shake-cinema-panel-frame h-full w-full object-cover"
             />
           </div>
         </div>
       </section>
+      </>
     );
   }
 
   return (
+    <>
+    <div className="gold-rule-line" aria-hidden="true" />
     <section
       ref={sectionRef}
       aria-labelledby="shake-heading shake-heading-phone"
@@ -541,5 +541,6 @@ export function ShakeProcess() {
         />
       </div>
     </section>
+    </>
   );
 }

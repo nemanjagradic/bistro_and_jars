@@ -1,0 +1,38 @@
+[
+  {
+    "id": "review-1",
+    "name": "Vladimir Trifunović",
+    "stars": 5,
+    "text": "Veoma uredno mesto, konobari su veoma ljubazni, brzi na poslu, sve pohvale!"
+  },
+  {
+    "id": "review-2",
+    "name": "Nikolina Ateljevic",
+    "stars": 5,
+    "text": "Divni ljudi, svratite. 🫶🏽"
+  },
+  {
+    "id": "review-3",
+    "name": "Tamara Jeremic",
+    "stars": 5,
+    "text": "Delicious coffee and shakes 🍭✨"
+  },
+  {
+    "id": "review-4",
+    "name": "Milos A",
+    "stars": 5,
+    "text": "Homemade ice tea kiwi was amazing!"
+  },
+  {
+    "id": "review-5",
+    "name": "Nikola",
+    "stars": 5,
+    "text": "Very nice atmosphere, and tasteful food 🙂"
+  },
+  {
+    "id": "review-6",
+    "name": "Saša Burić",
+    "stars": 5,
+    "text": "Veoma lepo mesto! Osoblje je veoma ljubazno, a kafa je odlična! :)"
+  }
+]

@@ -3,35 +3,43 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import {
+  HERO_SCRUB,
   HERO_TIMING,
   HERO_VIDEO_QUERY,
   VIDEO_LERP,
-  VIDEO_SCRUB,
   VIDEO_SEEK_INTERVAL_PHONE,
   VIDEO_SEEK_STEP,
   VIDEO_SEEK_STEP_PHONE,
   VIDEO_SNAP_PROGRESS,
   heroPinDistance,
+  holdHomeScrollRestoration,
+  markHomePinReady,
   matchesHeroPhone,
   progressInRange,
   scheduleScrollTriggerRefresh,
+  setupHomeScrollRestore,
   videoHasDuration,
   whenVideoCanScrub,
 } from "../lib/scroll-video";
+import { setHeroNavSignal } from "../lib/hero-nav-progress";
+import { HOME_COPY } from "../lib/home-copy";
+import { useLanguage } from "./language-provider";
+
+setupHomeScrollRestore();
 
 const HERO_VIDEOS = {
-  mobile: "/hero_mobile.mp4",
-  landscape: "/hero_desktop.mp4",
+  mobile: "/hero/mobile.mp4",
+  landscape: "/hero/desktop.mp4",
 } as const;
 
 const HERO_POSTERS = {
-  mobile: "/hero_mobile_poster.jpg",
-  landscape: "/hero_desktop_poster.jpg",
+  mobile: "/hero/mobile-poster.jpg",
+  landscape: "/hero/desktop-poster.jpg",
 } as const;
 
 const HERO_END_FRAMES = {
-  mobile: "/hero_mobile_end.jpg",
-  landscape: "/hero_desktop_end.jpg",
+  mobile: "/hero/mobile-end.jpg",
+  landscape: "/hero/desktop-end.jpg",
 } as const;
 
 function pickVideoSrc() {
@@ -41,6 +49,8 @@ function pickVideoSrc() {
 }
 
 export function HeroEntrance() {
+  const { locale } = useLanguage();
+  const copy = HOME_COPY[locale];
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -48,6 +58,8 @@ export function HeroEntrance() {
   const cueRef = useRef<HTMLDivElement>(null);
   const endStillRef = useRef<HTMLDivElement>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
+
+  useEffect(() => holdHomeScrollRestoration(), []);
 
   useEffect(() => {
     const media = window.matchMedia(HERO_VIDEO_QUERY);
@@ -76,6 +88,7 @@ export function HeroEntrance() {
       videoSrc === HERO_VIDEOS.mobile ? HERO_TIMING.mobile : HERO_TIMING.landscape;
 
     const applyOverlay = (progress: number) => {
+      setHeroNavSignal({ kind: "pin", progress });
       if (overlay) {
         overlay.style.opacity = String(
           1 - progressInRange(progress, timing.overlayOut[0], timing.overlayOut[1]),
@@ -124,10 +137,13 @@ export function HeroEntrance() {
     ).matches;
 
     if (reducedMotion) {
+      setHeroNavSignal({ kind: "static", progress: 0 });
       applyStaticCopy();
       showEndFrame();
+      markHomePinReady("hero");
       return () => {
         cancelled = true;
+        setHeroNavSignal({ kind: "absent", progress: 0 });
         clearStaticCopy();
         hideEndFrame();
       };
@@ -176,8 +192,10 @@ export function HeroEntrance() {
       raf = 0;
       ctx?.revert();
       ctx = undefined;
+      setHeroNavSignal({ kind: "static", progress: 0 });
       applyStaticCopy();
       showEndFrame();
+      if (permanent) markHomePinReady("hero");
     };
 
     const init = async () => {
@@ -219,7 +237,7 @@ export function HeroEntrance() {
             start: "top top",
             end: () => `+=${heroPinDistance(duration)}`,
             pin: true,
-            scrub: VIDEO_SCRUB,
+            scrub: HERO_SCRUB,
             anticipatePin: 1,
             refreshPriority: 1,
             invalidateOnRefresh: true,
@@ -241,6 +259,7 @@ export function HeroEntrance() {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(tick);
       scheduleScrollTriggerRefresh();
+      markHomePinReady("hero");
     };
 
     const onOrientation = () => {
@@ -266,6 +285,7 @@ export function HeroEntrance() {
       window.removeEventListener("orientationchange", onOrientation);
       video.removeEventListener("error", onVideoError);
       ctx?.revert();
+      setHeroNavSignal({ kind: "absent", progress: 0 });
       clearStaticCopy();
       hideEndFrame();
     };
@@ -273,6 +293,7 @@ export function HeroEntrance() {
 
   return (
     <section
+      id="hero-entrance"
       ref={sectionRef}
       className="relative h-dvh w-full overflow-hidden bg-background"
     >
@@ -317,12 +338,12 @@ export function HeroEntrance() {
               <picture>
                 <source
                   media="(min-width: 640px)"
-                  srcSet="/logo_wordmark.png"
+                  srcSet="/brand/wordmark.png"
                   width={2250}
                   height={272}
                 />
                 <img
-                  src="/logo_wordmark_stacked.png"
+                  src="/brand/wordmark-stacked.png"
                   alt="Bistro & Jars Coffee Bar"
                   width={1315}
                   height={627}
@@ -332,11 +353,10 @@ export function HeroEntrance() {
             </h1>
 
             <p className="font-heading mt-5 max-w-[20rem] text-lg italic leading-snug text-ivory [text-shadow:0_2px_18px_rgba(11,10,9,0.85)] sm:mt-7 sm:max-w-none sm:text-2xl md:text-3xl">
-              Kafa te dovede. Atmosfera te zadrži.
+              {copy.heroTagline}
             </p>
             <p className="mt-3 max-w-[20rem] text-[0.8125rem] leading-relaxed text-ivory/90 [text-shadow:0_2px_16px_rgba(11,10,9,0.9)] sm:mt-4 sm:max-w-md sm:text-base md:max-w-lg md:text-lg">
-              Uz slatke tegle, dobro društvo i sve što Bistro & Jars čini
-              posebnim.
+              {copy.heroSubline}
             </p>
           </div>
         </div>
@@ -347,7 +367,7 @@ export function HeroEntrance() {
         className="hero-scroll-cue pointer-events-none absolute bottom-[max(1.15rem,env(safe-area-inset-bottom))] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-ivory/80"
       >
         <span className="font-sans text-[0.6rem] tracking-[0.28em] uppercase sm:text-[0.65rem]">
-          Skroluj
+          {copy.heroScrollCue}
         </span>
         <span className="hero-scroll-cue-line block h-6 w-px bg-gold/80 sm:h-8" aria-hidden />
       </div>
