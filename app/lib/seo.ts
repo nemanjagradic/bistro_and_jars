@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadataBase = new URL("https://bistroandjars.com");
 
 /** Flip to true when the site should be crawled. */
-export const SITE_PUBLIC = false;
+export const SITE_PUBLIC = true;
 
 export const SITE_NAME = "Bistro & Jars Coffee Bar";
 
