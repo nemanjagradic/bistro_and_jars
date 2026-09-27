@@ -22,6 +22,7 @@ import {
   HERO_VIDEO_QUERY,
   progressInRange,
 } from "../lib/scroll-video";
+import { rememberPageScroll } from "../lib/page-scroll";
 import { LanguageSwitcher } from "./language-switcher";
 import { useLanguage } from "./language-provider";
 
@@ -158,6 +159,7 @@ export function SiteHeader() {
     if (pathname !== "/") return;
     event.preventDefault();
     closeMenu();
+    rememberPageScroll("/", 0);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 

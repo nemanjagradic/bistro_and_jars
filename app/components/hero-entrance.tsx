@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import {
   HERO_SCRUB,
@@ -11,6 +11,7 @@ import {
   VIDEO_SEEK_STEP,
   VIDEO_SEEK_STEP_PHONE,
   VIDEO_SNAP_PROGRESS,
+  armHomeScrollRestore,
   heroPinDistance,
   holdHomeScrollRestoration,
   markHomePinReady,
@@ -22,6 +23,7 @@ import {
   whenVideoCanScrub,
 } from "../lib/scroll-video";
 import { setHeroNavSignal } from "../lib/hero-nav-progress";
+import { homeVisitShouldRestore, readPageScroll } from "../lib/page-scroll";
 import { HOME_COPY } from "../lib/home-copy";
 import { useLanguage } from "./language-provider";
 
@@ -58,6 +60,11 @@ export function HeroEntrance() {
   const cueRef = useRef<HTMLDivElement>(null);
   const endStillRef = useRef<HTMLDivElement>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
+
+  useLayoutEffect(() => {
+    if (!homeVisitShouldRestore()) return;
+    armHomeScrollRestore(readPageScroll("/"));
+  }, []);
 
   useEffect(() => holdHomeScrollRestoration(), []);
 

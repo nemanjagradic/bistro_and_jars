@@ -2,6 +2,7 @@
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { readPageScroll, releasePageScrollSave } from "./page-scroll";
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
@@ -101,11 +102,10 @@ export function scheduleScrollTriggerRefresh() {
 
 /*
  * Home scroll restore. Pins are created only after video metadata loads and add
- * several viewports of spacing, so the browser's native restore lands on a stale
- * pixel offset (usually mid-shake). Instead the offset is saved on unload and
- * re-applied once every pin exists, when the layout matches the one it came from.
+ * several viewports of spacing, so a saved pixel offset applied immediately
+ * lands in the wrong place (usually mid-shake). The offset is re-applied once
+ * every pin exists.
  */
-const HOME_SCROLL_KEY = "bj:home-scroll";
 const HOME_PINS = ["hero", "shake"] as const;
 const RESTORE_FALLBACK_MS = 4000;
 const USER_SCROLL_EVENTS = ["wheel", "touchmove", "keydown"] as const;
@@ -116,41 +116,46 @@ const readyPins = new Set<HomePin>();
 let pendingRestore: number | null = null;
 let restoreFallback = 0;
 
-function readSavedHomeScroll() {
-  try {
-    const value = Number(sessionStorage.getItem(HOME_SCROLL_KEY));
-    sessionStorage.removeItem(HOME_SCROLL_KEY);
-    return Number.isFinite(value) ? value : 0;
-  } catch {
-    return 0;
-  }
-}
-
-function saveHomeScroll() {
-  try {
-    if (window.location.pathname === "/") {
-      sessionStorage.setItem(HOME_SCROLL_KEY, String(Math.round(window.scrollY)));
-    } else {
-      sessionStorage.removeItem(HOME_SCROLL_KEY);
-    }
-  } catch {}
-}
-
-function cancelPendingRestore() {
-  pendingRestore = null;
+function unbindRestoreGuards() {
   window.clearTimeout(restoreFallback);
+  restoreFallback = 0;
   USER_SCROLL_EVENTS.forEach((type) =>
     window.removeEventListener(type, cancelPendingRestore),
   );
 }
 
+function cancelPendingRestore() {
+  if (pendingRestore === null) return;
+  pendingRestore = null;
+  unbindRestoreGuards();
+  releasePageScrollSave();
+}
+
 function applyPendingRestore() {
   const target = pendingRestore;
-  cancelPendingRestore();
+  pendingRestore = null;
+  unbindRestoreGuards();
   if (target === null) return;
   refreshScrollTriggersNow();
   const max = document.documentElement.scrollHeight - window.innerHeight;
   window.scrollTo(0, Math.max(0, Math.min(target, max)));
+  releasePageScrollSave();
+}
+
+/** Jump back to a saved Home offset once both pins exist. */
+export function armHomeScrollRestore(target: number) {
+  if (target <= 0) {
+    releasePageScrollSave();
+    return;
+  }
+  pendingRestore = target;
+  window.scrollTo(0, 0);
+  unbindRestoreGuards();
+  USER_SCROLL_EVENTS.forEach((type) =>
+    window.addEventListener(type, cancelPendingRestore, { passive: true }),
+  );
+  restoreFallback = window.setTimeout(applyPendingRestore, RESTORE_FALLBACK_MS);
+  if (HOME_PINS.every((name) => readyPins.has(name))) applyPendingRestore();
 }
 
 /** Runs once when the home bundle is evaluated, before hydration. */
@@ -158,9 +163,8 @@ export function setupHomeScrollRestore() {
   if (typeof window === "undefined" || window.location.pathname !== "/") return;
 
   ScrollTrigger.clearScrollMemory("manual");
-  window.addEventListener("pagehide", saveHomeScroll);
 
-  const saved = readSavedHomeScroll();
+  const saved = readPageScroll("/");
   const nav = performance.getEntriesByType("navigation")[0] as
     | PerformanceNavigationTiming
     | undefined;
@@ -168,12 +172,7 @@ export function setupHomeScrollRestore() {
     nav?.type === "reload" && new URL(nav.name).pathname === "/";
   if (!reloadedHome || saved <= 0) return;
 
-  pendingRestore = saved;
-  window.scrollTo(0, 0);
-  USER_SCROLL_EVENTS.forEach((type) =>
-    window.addEventListener(type, cancelPendingRestore, { passive: true }),
-  );
-  restoreFallback = window.setTimeout(applyPendingRestore, RESTORE_FALLBACK_MS);
+  armHomeScrollRestore(saved);
 }
 
 /** True only during the brief window where a reload is waiting on both pins. */
@@ -226,8 +225,8 @@ export function heroPinDistance(duration: number) {
 export function shakePinDistance(duration: number) {
   const mobile = matchesMobile();
   const viewports = mobile
-    ? Math.min(2.5, Math.max(2.1, duration * 0.26))
-    : Math.min(2.3, Math.max(2, duration * 0.24));
+    ? Math.min(3.0, Math.max(2.1, duration * 0.26))
+    : Math.min(2.5, Math.max(2, duration * 0.24));
   return viewports * window.innerHeight;
 }
 
