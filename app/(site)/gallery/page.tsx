@@ -5,11 +5,12 @@ import {
   getGalleryPhotos,
   getOpenerPhoto,
 } from "../../lib/gallery";
+import { pageMetadata } from "../../lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Galerija — Bistro & Jars Coffee Bar",
-  description: "Kafa te dovede. Atmosfera te zadrži.",
-};
+  description: "Neki trenuci jednostavno bolje izgledaju uživo.",
+});
 
 export default function GalleryPage() {
   return (

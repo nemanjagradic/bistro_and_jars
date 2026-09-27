@@ -32,10 +32,6 @@ export function getHomeGroups(): MenuHomeGroup[] {
   return [...homeGroups].sort((a, b) => a.order - b.order);
 }
 
-export function getMenuItems(): MenuItem[] {
-  return items;
-}
-
 export function getMenuCategories(): MenuCategory[] {
   const categories: MenuCategory[] = [];
   const seen = new Set<string>();

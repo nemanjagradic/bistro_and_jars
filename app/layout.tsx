@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { LanguageProvider } from "./components/language-provider";
+import { metadataBase, pageMetadata } from "./lib/seo";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -17,9 +18,15 @@ const manrope = Manrope({
   display: "swap",
 });
 
+const homeTitle = "Bistro & Jars Coffee Bar — Novi Beograd";
+
 export const metadata: Metadata = {
-  title: "Bistro & Jars Coffee Bar",
-  description: "Kafa te dovede. Atmosfera te zadrži.",
+  metadataBase,
+  ...pageMetadata({
+    title: homeTitle,
+    description:
+      "Kafa te dovede. Atmosfera te zadrži. Uz slatke tegle, dobro društvo i sve što Bistro & Jars čini posebnim.",
+  }),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

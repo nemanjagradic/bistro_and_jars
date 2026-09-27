@@ -89,7 +89,17 @@ export function SiteFooter() {
 
         <LanguageSwitcher className="site-footer-lang" />
 
-        <p className="site-footer-copy">{copy.footerCopyright}</p>
+        <p className="site-footer-copy">
+          {copy.footerCopyright}
+          <span className="site-footer-sep" aria-hidden>
+            ·
+          </span>
+          <Link href="/terms">{copy.footerTerms}</Link>
+          <span className="site-footer-sep" aria-hidden>
+            ·
+          </span>
+          <Link href="/privacy">{copy.footerPrivacy}</Link>
+        </p>
       </div>
     </footer>
   );

@@ -166,7 +166,13 @@ export function SiteHeader() {
       ref={headerRef}
       className="site-header"
       data-menu-open={menuOpen ? "1" : "0"}
-      data-page={pathname === "/menu" ? "menu" : undefined}
+      data-page={
+        pathname === "/menu"
+          ? "menu"
+          : pathname === "/privacy" || pathname === "/terms"
+            ? "privacy"
+            : undefined
+      }
     >
       <div className="site-header-bar">
         <Link

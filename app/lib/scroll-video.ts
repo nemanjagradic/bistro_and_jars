@@ -176,6 +176,11 @@ export function setupHomeScrollRestore() {
   restoreFallback = window.setTimeout(applyPendingRestore, RESTORE_FALLBACK_MS);
 }
 
+/** True only during the brief window where a reload is waiting on both pins. */
+export function isHomeScrollRestorePending() {
+  return pendingRestore !== null;
+}
+
 /** Called by each pinned home section once its pin (or static fallback) is in place. */
 export function markHomePinReady(pin: HomePin) {
   readyPins.add(pin);
@@ -212,8 +217,8 @@ if (typeof window !== "undefined") {
 export function heroPinDistance(duration: number) {
   const mobile = matchesMobile();
   const viewports = mobile
-    ? Math.min(3, Math.max(2.5, duration * 0.3))
-    : Math.min(3.4, Math.max(3, duration * 0.4));
+    ? Math.min(2.4, Math.max(2, duration * 0.3))
+    : Math.min(2.6, Math.max(2.2, duration * 0.4));
   return viewports * window.innerHeight;
 }
 
@@ -221,8 +226,8 @@ export function heroPinDistance(duration: number) {
 export function shakePinDistance(duration: number) {
   const mobile = matchesMobile();
   const viewports = mobile
-    ? Math.min(3.2, Math.max(2.6, duration * 0.26))
-    : Math.min(3, Math.max(2.4, duration * 0.24));
+    ? Math.min(2.5, Math.max(2.1, duration * 0.26))
+    : Math.min(2.3, Math.max(2, duration * 0.24));
   return viewports * window.innerHeight;
 }
 

@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import { DayPicker } from "react-day-picker";
 import { enGB, srLatn } from "react-day-picker/locale";
 import {
@@ -50,7 +51,13 @@ type FormErrors = Partial<
 >;
 
 const MESSAGE_MAX = 500;
+const NAME_MAX = 60;
 const CHAR_COUNTER_THRESHOLD = 450;
+
+type SendFallback = {
+  whatsappUrl: string;
+  telUrl: string;
+};
 const PICKER_SHEET_QUERY = "(max-width: 639px)";
 
 function CalendarIcon() {
@@ -98,6 +105,7 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
   const [tab, setTab] = useState<FormTab>("inquiry");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [fallback, setFallback] = useState<SendFallback | null>(null);
   const [message, setMessage] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedHour, setSelectedHour] = useState<number | "">("");
@@ -243,8 +251,7 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
     const nextErrors: FormErrors = {};
 
     if (!name.trim()) nextErrors.name = copy.validationRequired;
-    const phoneE164 = toE164(phone);
-    if (!phoneE164) nextErrors.phone = copy.validationPhone;
+    if (!toE164(phone)) nextErrors.phone = copy.validationPhone;
 
     if (tab === "inquiry") {
       if (!message.trim()) nextErrors.message = copy.validationRequired;
@@ -281,6 +288,7 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
     if (tab === "inquiry") {
       return {
         type: "inquiry" as const,
+        locale,
         name: name.trim(),
         phone: phoneE164,
         message: message.trim(),
@@ -295,6 +303,7 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
 
     return {
       type: "reservation" as const,
+      locale,
       name: name.trim(),
       phone: phoneE164,
       date: dateKey,
@@ -306,15 +315,39 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const leaveBlank = String(
+      new FormData(event.currentTarget).get("leave_blank") ?? "",
+    );
     if (status === "loading" || status === "success") return;
     if (!validate()) return;
 
     setStatus("loading");
-    void buildPayload();
+    setFallback(null);
 
-    window.setTimeout(() => {
-      setStatus("success");
-    }, 1000);
+    void (async () => {
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...buildPayload(), leaveBlank }),
+        });
+        const data = (await response.json()) as {
+          ok?: boolean;
+          whatsappUrl?: string;
+          telUrl?: string;
+        };
+        if (data.ok) {
+          setStatus("success");
+          return;
+        }
+        if (data.whatsappUrl && data.telUrl) {
+          setFallback({ whatsappUrl: data.whatsappUrl, telUrl: data.telUrl });
+        }
+        setStatus("error");
+      } catch {
+        setStatus("error");
+      }
+    })();
   };
 
   const longText = tab === "inquiry" ? message : celebration;
@@ -331,6 +364,7 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
           className="contact-input"
           type="text"
           autoComplete="name"
+          maxLength={NAME_MAX}
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder={copy.placeholderName}
@@ -379,10 +413,6 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
           <CloseIcon />
         </button>
       </div>
-
-      {!selectedDate ? (
-        <p className="contact-picker-rule">{copy.pickerTimeRule}</p>
-      ) : null}
 
       <div className="contact-calendar-inline">
         <DayPicker
@@ -449,6 +479,8 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
         ? pickerPopover
         : null;
 
+  const ContactHeading = pageMode ? "h1" : "h2";
+
   return (
     <section
       id={id}
@@ -460,12 +492,12 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
       <ScrollReveal className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <p className="site-kicker">{copy.contactKicker}</p>
-          <h2
+          <ContactHeading
             id="contact-heading"
             className="mt-5 font-heading text-3xl font-medium leading-tight text-ivory sm:text-4xl md:text-[2.75rem] md:leading-tight"
           >
             {copy.contactHeading}
-          </h2>
+          </ContactHeading>
         </div>
 
         <div
@@ -634,12 +666,31 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
                     </>
                   )}
 
+                  <div className="contact-honeypot" aria-hidden="true">
+                    <label htmlFor="leave-blank">Leave blank</label>
+                    <input
+                      id="leave-blank"
+                      name="leave_blank"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      defaultValue=""
+                    />
+                  </div>
+
                   <div className="contact-form-footer">
                     {tab === "reservation" ? (
                       <p className="contact-disclaimer">
                         {copy.reservationDisclaimer}
                       </p>
                     ) : null}
+                    <p className="contact-privacy">
+                      {copy.privacyConsentBefore}
+                      <Link href="/terms">{copy.termsLink}</Link>
+                      {copy.consentBetween}
+                      <Link href="/privacy">{copy.privacyLink}</Link>
+                      {copy.privacyConsentAfter}
+                    </p>
                     <button
                       type="submit"
                       className="site-cta-pill site-cta-pill-fill contact-submit"
@@ -650,12 +701,15 @@ export function ContactSection({ id, pageMode = false }: ContactSectionProps) {
                   </div>
 
                   {status === "error" ? (
-                    <p
-                      className="contact-error contact-error-block"
-                      role="alert"
-                    >
-                      {copy.submitError}
-                    </p>
+                    <div className="contact-error-block" role="alert">
+                      <p className="contact-error">{copy.submitError}</p>
+                      {fallback ? (
+                        <p className="contact-fallback">
+                          <a href={fallback.whatsappUrl}>{copy.fallbackWhatsApp}</a>
+                          <a href={fallback.telUrl}>{copy.fallbackCall}</a>
+                        </p>
+                      ) : null}
+                    </div>
                   ) : null}
                 </form>
               )}

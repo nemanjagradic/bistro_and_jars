@@ -9,11 +9,11 @@ export const VENUE = {
     "https://www.google.com/maps/search/?api=1&query=Bistro+%26+Jars+Coffee+Bar",
 } as const;
 
-export function telLink(phone = VENUE.phoneE164) {
+export function telLink(phone: string = VENUE.phoneE164) {
   return `tel:${phone}`;
 }
 
-export function whatsappLink(phone = VENUE.phoneE164) {
+export function whatsappLink(phone: string = VENUE.phoneE164) {
   return `https://wa.me/${phone.replace(/\D/g, "")}`;
 }
 

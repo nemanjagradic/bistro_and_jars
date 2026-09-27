@@ -10,6 +10,7 @@ import {
   VIDEO_SEEK_STEP,
   VIDEO_SEEK_STEP_PHONE,
   VIDEO_SNAP_PROGRESS,
+  isHomeScrollRestorePending,
   markHomePinReady,
   matchesHeroPhone,
   refreshScrollTriggersNow,
@@ -227,6 +228,7 @@ export function ShakeProcess() {
   const [assets, setAssets] = useState<ReturnType<
     typeof pickShakeAssets
   > | null>(null);
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
 
   useEffect(() => {
     setReducedMotion(
@@ -242,7 +244,9 @@ export function ShakeProcess() {
     const media = window.matchMedia(HERO_VIDEO_QUERY);
     const sync = () => {
       setHoldFinished(false);
-      setAssets(pickShakeAssets());
+      const next = pickShakeAssets();
+      setAssets(next);
+      setVideoSrc((current) => (current ? next.video : current));
     };
     sync();
     media.addEventListener("change", sync);
@@ -250,7 +254,57 @@ export function ShakeProcess() {
   }, []);
 
   useEffect(() => {
-    if (reducedMotion || !assets) return;
+    if (reducedMotion) return;
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let cancelled = false;
+    const arm = () => {
+      if (cancelled) return;
+      cancelled = true;
+      setVideoSrc(pickShakeAssets().video);
+    };
+    if (isHomeScrollRestorePending()) {
+      arm();
+      return;
+    }
+
+    // The hero pin adds its scroll space after metadata loads. Before that,
+    // this section sits close enough to trip a one-viewport margin.
+    const heroPinned = () =>
+      !!document.getElementById("hero-entrance")?.closest(".pin-spacer");
+    const withinReach = () => {
+      const rect = section.getBoundingClientRect();
+      return rect.top < window.innerHeight * 2 && rect.bottom > -window.innerHeight;
+    };
+    const tryArm = () => {
+      if (!heroPinned()) return;
+      if (withinReach()) arm();
+    };
+
+    const observer = new IntersectionObserver(() => tryArm(), {
+      rootMargin: "100% 0px",
+    });
+    observer.observe(section);
+    const layout = new MutationObserver(() => {
+      tryArm();
+      if (heroPinned()) layout.disconnect();
+    });
+    layout.observe(document.body, { childList: true, subtree: true });
+    const fallback = window.setTimeout(() => {
+      if (withinReach()) arm();
+    }, 3000);
+
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+      layout.disconnect();
+      window.clearTimeout(fallback);
+    };
+  }, [reducedMotion]);
+
+  useEffect(() => {
+    if (reducedMotion || !assets || !videoSrc) return;
 
     const section = sectionRef.current;
     const video = videoRef.current;
@@ -412,7 +466,7 @@ export function ShakeProcess() {
       ctx?.revert();
       if (film) film.style.removeProperty("opacity");
     };
-  }, [reducedMotion, assets]);
+  }, [reducedMotion, assets, videoSrc]);
 
   if (reducedMotion) {
     const finishedSrc = assets?.finished ?? SHAKE_FINISHED.phone;
@@ -493,11 +547,11 @@ export function ShakeProcess() {
                 key={assets.video}
                 ref={videoRef}
                 className="shake-video absolute inset-0 h-full w-full"
-                src={assets.video}
+                src={videoSrc ?? undefined}
                 poster={assets.poster}
                 muted
                 playsInline
-                preload="auto"
+                preload={videoSrc ? "auto" : "none"}
                 aria-hidden
               />
             ) : null}
