@@ -8,7 +8,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.45",
-    "price": 820
+    "price": 895
   },
   {
     "id": "slatke-tegle-monster-shake-kinder-0-45",
@@ -19,7 +19,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.45",
-    "price": 820
+    "price": 895
   },
   {
     "id": "slatke-tegle-monster-shake-snikers-0-45",
@@ -30,7 +30,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.45",
-    "price": 820
+    "price": 895
   },
   {
     "id": "slatke-tegle-monster-shake-sladoled-stapic-0-45",
@@ -41,7 +41,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.45",
-    "price": 820
+    "price": 895
   },
   {
     "id": "kafe-i-specijaliteti-od-kafe-espresso",
@@ -66,15 +66,15 @@
     "price": 290
   },
   {
-    "id": "kafe-i-specijaliteti-od-kafe-espresso-sa-sojinim-mlekom",
+    "id": "kafe-i-specijaliteti-od-kafe-cappuccino",
     "categorySr": "Kafe i specijaliteti od kafe",
     "categoryEn": "Coffee",
-    "nameSr": "Espresso sa sojinim mlekom",
-    "nameEn": "Espresso with soy milk",
+    "nameSr": "Cappuccino",
+    "nameEn": "Cappuccino",
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 360
+    "price": 320
   },
   {
     "id": "kafe-i-specijaliteti-od-kafe-espresso-sa-slagom",
@@ -88,15 +88,26 @@
     "price": 320
   },
   {
-    "id": "kafe-i-specijaliteti-od-kafe-freddo-espresso",
+    "id": "kafe-i-specijaliteti-od-kafe-dupli-espresso",
     "categorySr": "Kafe i specijaliteti od kafe",
     "categoryEn": "Coffee",
-    "nameSr": "Freddo Espresso",
-    "nameEn": "Freddo Espresso",
+    "nameSr": "Dupli espresso",
+    "nameEn": "Double espresso",
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 290
+    "price": 400
+  },
+  {
+    "id": "kafe-i-specijaliteti-od-kafe-dupli-espresso-sa-mlekom",
+    "categorySr": "Kafe i specijaliteti od kafe",
+    "categoryEn": "Coffee",
+    "nameSr": "Dupli espresso sa mlekom",
+    "nameEn": "Double espresso with milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 420
   },
   {
     "id": "kafe-i-specijaliteti-od-kafe-americano",
@@ -118,84 +129,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 390
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-affogato-sa-2-kugle-sladoleda",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Affogato sa 2 kugle sladoleda",
-    "nameEn": "Affogato with 2 scoops of ice cream",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
     "price": 410
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-dupli-espresso",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Dupli espresso",
-    "nameEn": "Double espresso",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 390
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-dupli-espresso-sa-mlekom",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Dupli espresso sa mlekom",
-    "nameEn": "Double espresso with milk",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 410
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-dupli-espresso-sa-sojinim-mlekom",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Dupli espresso sa sojinim mlekom",
-    "nameEn": "Double espresso with soy milk",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 460
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-cappuccino",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Cappuccino",
-    "nameEn": "Cappuccino",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 320
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-freddo-cappuccino",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Freddo Cappuccino",
-    "nameEn": "Freddo Cappuccino",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 350
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-cappuccino-sa-sojinim-mlekom",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Cappuccino sa sojinim mlekom",
-    "nameEn": "Cappuccino with soy milk",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 400
   },
   {
     "id": "kafe-i-specijaliteti-od-kafe-domaca-kafa",
@@ -217,7 +151,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 260
+    "price": 280
   },
   {
     "id": "kafe-i-specijaliteti-od-kafe-nescafe",
@@ -229,28 +163,6 @@
     "descriptionEn": null,
     "quantity": null,
     "price": 310
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-dalgona",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Dalgona",
-    "nameEn": "Dalgona",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 390
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-dalgona-sa-monin-ukusima",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Dalgona sa Monin ukusima",
-    "nameEn": "Dalgona with Monin flavours",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 430
   },
   {
     "id": "kafe-i-specijaliteti-od-kafe-nescafe-sa-slagom",
@@ -286,17 +198,6 @@
     "price": 410
   },
   {
-    "id": "kafe-i-specijaliteti-od-kafe-nescafe-sa-sojinim-mlekom",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Nescafe sa sojinim mlekom",
-    "nameEn": "Nescafé with soy milk",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 410
-  },
-  {
     "id": "kafe-i-specijaliteti-od-kafe-caffe-latte",
     "categorySr": "Kafe i specijaliteti od kafe",
     "categoryEn": "Coffee",
@@ -308,44 +209,11 @@
     "price": 350
   },
   {
-    "id": "kafe-i-specijaliteti-od-kafe-caffe-latte-sa-sojinim-mlekom",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Caffe Latte sa sojinim mlekom",
-    "nameEn": "Caffè latte with soy milk",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 420
-  },
-  {
     "id": "kafe-i-specijaliteti-od-kafe-caffe-latte-sa-monin-ukusima",
     "categorySr": "Kafe i specijaliteti od kafe",
     "categoryEn": "Coffee",
     "nameSr": "Caffe Latte sa Monin ukusima",
     "nameEn": "Caffè latte with Monin flavours",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 410
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-decija-kafa-nesquik",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Dečija kafa-Nesquik",
-    "nameEn": "Kids' coffee — Nesquik",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": null,
-    "price": 290
-  },
-  {
-    "id": "kafe-i-specijaliteti-od-kafe-ice-coffee",
-    "categorySr": "Kafe i specijaliteti od kafe",
-    "categoryEn": "Coffee",
-    "nameSr": "Ice Coffee",
-    "nameEn": "Iced coffee",
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
@@ -363,15 +231,389 @@
     "price": 420
   },
   {
-    "id": "kafe-i-specijaliteti-od-kafe-irish-coffee",
+    "id": "kafe-i-specijaliteti-od-kafe-decija-kafa-nesquik",
     "categorySr": "Kafe i specijaliteti od kafe",
     "categoryEn": "Coffee",
-    "nameSr": "Irish Coffee",
-    "nameEn": "Irish coffee",
+    "nameSr": "Dečija kafa-Nesquik",
+    "nameEn": "Kids' coffee — Nesquik",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 290
+  },
+  {
+    "id": "hladne-kafe-ice-coffee",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Ice Coffee",
+    "nameEn": "Iced coffee",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 410
+  },
+  {
+    "id": "hladne-kafe-affogato-sa-2-kugle-sladoleda",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Affogato sa 2 kugle sladoleda",
+    "nameEn": "Affogato with 2 scoops of ice cream",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 410
+  },
+  {
+    "id": "hladne-kafe-freddo-espresso",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Freddo Espresso",
+    "nameEn": "Freddo Espresso",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 290
+  },
+  {
+    "id": "hladne-kafe-freddo-cappuccino",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Freddo Cappuccino",
+    "nameEn": "Freddo Cappuccino",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 350
+  },
+  {
+    "id": "hladne-kafe-iced-latte",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Iced Latte",
+    "nameEn": "Iced latte",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 380
+  },
+  {
+    "id": "hladne-kafe-iced-latte-sa-monin-ukusima",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Iced Latte sa Monin ukusima",
+    "nameEn": "Iced latte with Monin flavours",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 450
+  },
+  {
+    "id": "hladne-kafe-dalgona-sa-monin-ukusima",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Dalgona sa Monin ukusima",
+    "nameEn": "Dalgona with Monin flavours",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 430
+  },
+  {
+    "id": "hladne-kafe-dalgona",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Dalgona",
+    "nameEn": "Dalgona",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 390
+  },
+  {
+    "id": "hladne-kafe-ice-mocha-cokolada",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Ice Mocha čokolada",
+    "nameEn": "Iced mocha chocolate",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 460
+  },
+  {
+    "id": "hladne-kafe-ice-mocha-pistaci",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Ice Mocha pistaći",
+    "nameEn": "Iced mocha pistachio",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 480
+  },
+  {
+    "id": "hladne-kafe-ice-mocha-jagoda",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Ice Mocha jagoda",
+    "nameEn": "Iced mocha strawberry",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 460
+  },
+  {
+    "id": "hladne-kafe-ice-mocha-karamela",
+    "categorySr": "Hladne kafe",
+    "categoryEn": "Iced coffee",
+    "nameSr": "Ice Mocha karamela",
+    "nameEn": "Iced mocha caramel",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 460
+  },
+  {
+    "id": "kafe-sa-sojinim-mlekom-espresso-sa-sojinim-mlekom",
+    "categorySr": "Kafe sa sojinim mlekom",
+    "categoryEn": "Coffee with soy milk",
+    "nameSr": "Espresso sa sojinim mlekom",
+    "nameEn": "Espresso with soy milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 390
+  },
+  {
+    "id": "kafe-sa-sojinim-mlekom-dupli-espresso-sa-sojinim-mlekom",
+    "categorySr": "Kafe sa sojinim mlekom",
+    "categoryEn": "Coffee with soy milk",
+    "nameSr": "Dupli espresso sa sojinim mlekom",
+    "nameEn": "Double espresso with soy milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 490
+  },
+  {
+    "id": "kafe-sa-sojinim-mlekom-cappuccino-sa-sojinim-mlekom",
+    "categorySr": "Kafe sa sojinim mlekom",
+    "categoryEn": "Coffee with soy milk",
+    "nameSr": "Cappuccino sa sojinim mlekom",
+    "nameEn": "Cappuccino with soy milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 420
+  },
+  {
+    "id": "kafe-sa-sojinim-mlekom-caffe-latte-sa-sojinim-mlekom",
+    "categorySr": "Kafe sa sojinim mlekom",
+    "categoryEn": "Coffee with soy milk",
+    "nameSr": "Caffe Latte sa sojinim mlekom",
+    "nameEn": "Caffè latte with soy milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 450
+  },
+  {
+    "id": "kafe-sa-sojinim-mlekom-nescafe-sa-sojinim-mlekom",
+    "categorySr": "Kafe sa sojinim mlekom",
+    "categoryEn": "Coffee with soy milk",
+    "nameSr": "Nescafe sa sojinim mlekom",
+    "nameEn": "Nescafé with soy milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 410
+  },
+  {
+    "id": "kafe-sa-sojinim-mlekom-iced-latte-sa-sojinim-mlekom",
+    "categorySr": "Kafe sa sojinim mlekom",
+    "categoryEn": "Coffee with soy milk",
+    "nameSr": "Iced Latte sa sojinim mlekom",
+    "nameEn": "Iced latte with soy milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 480
+  },
+  {
+    "id": "kafe-sa-bademovim-mlekom-espresso-sa-bademovim-mlekom",
+    "categorySr": "Kafe sa bademovim mlekom",
+    "categoryEn": "Coffee with almond milk",
+    "nameSr": "Espresso sa bademovim mlekom",
+    "nameEn": "Espresso with almond milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 420
+  },
+  {
+    "id": "kafe-sa-bademovim-mlekom-dupli-espresso-sa-bademovim-mlekom",
+    "categorySr": "Kafe sa bademovim mlekom",
+    "categoryEn": "Coffee with almond milk",
+    "nameSr": "Dupli espresso sa bademovim mlekom",
+    "nameEn": "Double espresso with almond milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 520
+  },
+  {
+    "id": "kafe-sa-bademovim-mlekom-cappuccino-sa-bademovim-mlekom",
+    "categorySr": "Kafe sa bademovim mlekom",
+    "categoryEn": "Coffee with almond milk",
+    "nameSr": "Cappuccino sa bademovim mlekom",
+    "nameEn": "Cappuccino with almond milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 480
+  },
+  {
+    "id": "kafe-sa-bademovim-mlekom-caffe-latte-sa-bademovim-mlekom",
+    "categorySr": "Kafe sa bademovim mlekom",
+    "categoryEn": "Coffee with almond milk",
+    "nameSr": "Caffe Latte sa bademovim mlekom",
+    "nameEn": "Caffè latte with almond milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 480
+  },
+  {
+    "id": "kafe-sa-bademovim-mlekom-nescafe-sa-bademovim-mlekom",
+    "categorySr": "Kafe sa bademovim mlekom",
+    "categoryEn": "Coffee with almond milk",
+    "nameSr": "Nescafe sa bademovim mlekom",
+    "nameEn": "Nescafé with almond milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 440
+  },
+  {
+    "id": "kafe-sa-bademovim-mlekom-iced-latte-sa-bademovim-mlekom",
+    "categorySr": "Kafe sa bademovim mlekom",
+    "categoryEn": "Coffee with almond milk",
+    "nameSr": "Iced Latte sa bademovim mlekom",
+    "nameEn": "Iced latte with almond milk",
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
     "price": 510
+  },
+  {
+    "id": "kafe-bez-kofeina-espresso-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Espresso bez kofeina",
+    "nameEn": "Decaf espresso",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 250
+  },
+  {
+    "id": "kafe-bez-kofeina-espresso-sa-mlekom-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Espresso sa mlekom bez kofeina",
+    "nameEn": "Decaf espresso with milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 290
+  },
+  {
+    "id": "kafe-bez-kofeina-espresso-sa-sojinim-mlekom-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Espresso sa sojinim mlekom bez kofeina",
+    "nameEn": "Decaf espresso with soy milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 390
+  },
+  {
+    "id": "kafe-bez-kofeina-espresso-sa-bademovim-mlekom-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Espresso sa bademovim mlekom bez kofeina",
+    "nameEn": "Decaf espresso with almond milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 420
+  },
+  {
+    "id": "kafe-bez-kofeina-cappuccino-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Cappuccino bez kofeina",
+    "nameEn": "Decaf cappuccino",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 320
+  },
+  {
+    "id": "kafe-bez-kofeina-cappuccino-sa-sojinim-mlekom-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Cappuccino sa sojinim mlekom bez kofeina",
+    "nameEn": "Decaf cappuccino with soy milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 420
+  },
+  {
+    "id": "kafe-bez-kofeina-cappuccino-sa-bademovim-mlekom-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Cappuccino sa bademovim mlekom bez kofeina",
+    "nameEn": "Decaf cappuccino with almond milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 480
+  },
+  {
+    "id": "kafe-bez-kofeina-caffe-latte-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Caffe Latte bez kofeina",
+    "nameEn": "Decaf caffè latte",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 350
+  },
+  {
+    "id": "kafe-bez-kofeina-caffe-latte-sa-sojinim-mlekom-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Caffe Latte sa sojinim mlekom bez kofeina",
+    "nameEn": "Decaf caffè latte with soy milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 450
+  },
+  {
+    "id": "kafe-bez-kofeina-caffe-latte-sa-bademovim-mlekom-bez-kofeina",
+    "categorySr": "Kafe bez kofeina",
+    "categoryEn": "Decaf coffee",
+    "nameSr": "Caffe Latte sa bademovim mlekom bez kofeina",
+    "nameEn": "Decaf caffè latte with almond milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 480
   },
   {
     "id": "flasirani-sokovi-coca-cola-0-25",
@@ -539,13 +781,13 @@
     "price": 290
   },
   {
-    "id": "flasirani-sokovi-cedevita-0-33",
+    "id": "flasirani-sokovi-cedevita-pomorandza-0-33",
     "categorySr": "Flaširani sokovi",
     "categoryEn": "Soft drinks",
-    "nameSr": "Cedevita",
-    "nameEn": "Cedevita",
-    "descriptionSr": "više ukusa",
-    "descriptionEn": "several flavours",
+    "nameSr": "Cedevita pomorandža",
+    "nameEn": "Cedevita Orange",
+    "descriptionSr": null,
+    "descriptionEn": null,
     "quantity": "0.33",
     "price": 250
   },
@@ -577,8 +819,8 @@
     "categoryEn": "Cider",
     "nameSr": "Somersby",
     "nameEn": "Somersby",
-    "descriptionSr": "jabuka, kruška, borovnica, malina-limeta",
-    "descriptionEn": "apple, pear, blueberry, raspberry-lime",
+    "descriptionSr": "jabuka, kruška, borovnica",
+    "descriptionEn": "apple, pear, blueberry",
     "quantity": "0.33",
     "price": 390
   },
@@ -646,7 +888,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 80
+    "price": 100
   },
   {
     "id": "dodaci-med",
@@ -657,7 +899,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 80
+    "price": 100
   },
   {
     "id": "dodaci-limun",
@@ -701,7 +943,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 100
+    "price": 140
   },
   {
     "id": "dodaci-mleko",
@@ -712,7 +954,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 80
+    "price": 100
   },
   {
     "id": "dodaci-sojino-mleko",
@@ -723,7 +965,40 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 100
+    "price": 130
+  },
+  {
+    "id": "dodaci-bademovo-mleko",
+    "categorySr": "Dodaci",
+    "categoryEn": "Extras",
+    "nameSr": "Bademovo mleko",
+    "nameEn": "Almond milk",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 150
+  },
+  {
+    "id": "dodaci-oreo",
+    "categorySr": "Dodaci",
+    "categoryEn": "Extras",
+    "nameSr": "Oreo",
+    "nameEn": "Oreo",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 150
+  },
+  {
+    "id": "dodaci-plazma",
+    "categorySr": "Dodaci",
+    "categoryEn": "Extras",
+    "nameSr": "Plazma",
+    "nameEn": "Plazma",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": null,
+    "price": 150
   },
   {
     "id": "sladoled-kup-sladoled-kup",
@@ -731,21 +1006,10 @@
     "categoryEn": "Ice cream",
     "nameSr": "Sladoled kup",
     "nameEn": "Ice cream cup",
-    "descriptionSr": "tri kugle sladoleda straćatela, šlag, toping, mrvice",
-    "descriptionEn": "three scoops stracciatella, whipped cream, topping, sprinkles",
+    "descriptionSr": "tri kugle sladoleda po izboru, šlag, toping, mrvice",
+    "descriptionEn": "three scoops of your choice, whipped cream, topping, sprinkles",
     "quantity": null,
-    "price": 480
-  },
-  {
-    "id": "sladoled-kup-sladoled-kup-2",
-    "categorySr": "Sladoled kup",
-    "categoryEn": "Ice cream",
-    "nameSr": "Sladoled kup",
-    "nameEn": "Ice cream cup",
-    "descriptionSr": "tri kugle sladoleda vanila, šlag, toping, mrvice",
-    "descriptionEn": "three scoops vanilla, whipped cream, topping, sprinkles",
-    "quantity": null,
-    "price": 480
+    "price": 525
   },
   {
     "id": "vode-rosa-0-33",
@@ -800,7 +1064,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.33",
-    "price": 280
+    "price": 290
   },
   {
     "id": "cedjeni-sokovi-limunada-sa-ukusom-0-33",
@@ -811,7 +1075,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.33",
-    "price": 360
+    "price": 380
   },
   {
     "id": "cedjeni-sokovi-crna-limunada-0-33",
@@ -822,7 +1086,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.33",
-    "price": 360
+    "price": 380
   },
   {
     "id": "cedjeni-sokovi-limunada-nana-0-33",
@@ -833,7 +1097,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.33",
-    "price": 360
+    "price": 380
   },
   {
     "id": "cedjeni-sokovi-limunada-0-33",
@@ -858,14 +1122,14 @@
     "price": 390
   },
   {
-    "id": "cedjeni-sokovi-cedjeni-grejp-0-33",
+    "id": "cedjeni-sokovi-cedjeni-grejp-0-25",
     "categorySr": "Ceđeni sokovi",
     "categoryEn": "Fresh juices",
     "nameSr": "Ceđeni grejp",
     "nameEn": "Fresh grapefruit",
     "descriptionSr": null,
     "descriptionEn": null,
-    "quantity": "0.33",
+    "quantity": "0.25",
     "price": 420
   },
   {
@@ -995,8 +1259,8 @@
     "categoryEn": "Tea & winter drinks",
     "nameSr": "Dolcezza domaći čajevi",
     "nameEn": "Dolcezza homemade teas",
-    "descriptionSr": "Toffe Caramel, Christmas tea, Nana, Blackberry, Lemon, Kamilica, Chocolate & Coconut...",
-    "descriptionEn": "Toffee Caramel, Christmas tea, mint, blackberry, lemon, chamomile, chocolate & coconut…",
+    "descriptionSr": "nana, kamilica, zeleni, blackberry, christmas, china zelena, toffee caramel, confucius",
+    "descriptionEn": "mint, chamomile, green, blackberry, christmas, china green, toffee caramel, confucius",
     "quantity": null,
     "price": 320
   },
@@ -1042,7 +1306,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": null,
-    "price": 495
+    "price": 520
   },
   {
     "id": "cajevi-i-zimski-topli-napici-kuvano-vino-0-35",
@@ -1232,6 +1496,39 @@
     "price": 370
   },
   {
+    "id": "toceno-pivo-heineken-0-25",
+    "categorySr": "Točeno pivo",
+    "categoryEn": "Draft beer",
+    "nameSr": "Heineken",
+    "nameEn": "Heineken",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": "0.25",
+    "price": 330
+  },
+  {
+    "id": "toceno-pivo-heineken-0-35",
+    "categorySr": "Točeno pivo",
+    "categoryEn": "Draft beer",
+    "nameSr": "Heineken",
+    "nameEn": "Heineken",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": "0.35",
+    "price": 395
+  },
+  {
+    "id": "toceno-pivo-heineken-0-5",
+    "categorySr": "Točeno pivo",
+    "categoryEn": "Draft beer",
+    "nameSr": "Heineken",
+    "nameEn": "Heineken",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": "0.5",
+    "price": 440
+  },
+  {
     "id": "grickalice-nacosi-100g",
     "categorySr": "Grickalice",
     "categoryEn": "Snacks",
@@ -1284,7 +1581,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "80g",
-    "price": 140
+    "price": 160
   },
   {
     "id": "grickalice-kokice-100g",
@@ -1295,7 +1592,40 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "100g",
-    "price": 270
+    "price": 300
+  },
+  {
+    "id": "tost-sendvici-sendvic-sa-pecenicom-210g",
+    "categorySr": "Tost sendviči",
+    "categoryEn": "Toast sandwiches",
+    "nameSr": "Sendvic sa pecenicom",
+    "nameEn": "Pork toast sandwich",
+    "descriptionSr": "bela kifla, pecenica, kackavalj, majonez, kiseli krastavac, margarinski namaz",
+    "descriptionEn": "white roll, pork, kackavalj, mayonnaise, pickled cucumber, margarine spread",
+    "quantity": "210g",
+    "price": 395
+  },
+  {
+    "id": "tost-sendvici-cezar-sendvic-sa-piletinom-210g",
+    "categorySr": "Tost sendviči",
+    "categoryEn": "Toast sandwiches",
+    "nameSr": "Cezar sendvic sa piletinom",
+    "nameEn": "Caesar chicken toast sandwich",
+    "descriptionSr": "bela kifla, grilovan pileci file, panceta, cezar sos, iceberg salata, kackavalj",
+    "descriptionEn": "white roll, grilled chicken fillet, bacon, caesar sauce, iceberg lettuce, kackavalj",
+    "quantity": "210g",
+    "price": 395
+  },
+  {
+    "id": "tost-sendvici-crispy-sendvic-sa-piletinom-210g",
+    "categorySr": "Tost sendviči",
+    "categoryEn": "Toast sandwiches",
+    "nameSr": "Crispy sendvic sa piletinom",
+    "nameEn": "Crispy chicken toast sandwich",
+    "descriptionSr": "bela kifla, hrskava piletina, UkusNo.1 sos, iceberg salata, radic",
+    "descriptionEn": "white roll, crispy chicken, UkusNo.1 sauce, iceberg lettuce, radicchio",
+    "quantity": "210g",
+    "price": 395
   },
   {
     "id": "flasirano-pivo-heineken-0-25",
@@ -1320,17 +1650,6 @@
     "price": 290
   },
   {
-    "id": "flasirano-pivo-zajecarsko-tamno-0-33",
-    "categorySr": "Flaširano pivo",
-    "categoryEn": "Bottled beer",
-    "nameSr": "Zaječarsko tamno",
-    "nameEn": "Zaječarsko Dark",
-    "descriptionSr": null,
-    "descriptionEn": null,
-    "quantity": "0.33",
-    "price": 320
-  },
-  {
     "id": "rakija-crnogorska-loza-0-03",
     "categorySr": "Rakija",
     "categoryEn": "Rakija",
@@ -1339,7 +1658,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 380
+    "price": 390
   },
   {
     "id": "rakija-sljiva-0-03",
@@ -1350,7 +1669,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 380
+    "price": 390
   },
   {
     "id": "rakija-dunja-0-03",
@@ -1361,7 +1680,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 380
+    "price": 390
   },
   {
     "id": "rakija-viljamovka-0-03",
@@ -1372,7 +1691,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 380
+    "price": 390
   },
   {
     "id": "rakija-kajsija-0-03",
@@ -1383,7 +1702,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 380
+    "price": 390
   },
   {
     "id": "rakija-medovaca-meduska-0-03",
@@ -1394,7 +1713,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 380
+    "price": 390
   },
   {
     "id": "likeri-gorki-list-0-03",
@@ -1441,6 +1760,17 @@
     "price": 390
   },
   {
+    "id": "likeri-amaretto-disaronno-0-03",
+    "categorySr": "Likeri",
+    "categoryEn": "Liqueurs",
+    "nameSr": "Amaretto Disaronno",
+    "nameEn": "Amaretto Disaronno",
+    "descriptionSr": null,
+    "descriptionEn": null,
+    "quantity": "0.03",
+    "price": 390
+  },
+  {
     "id": "brandy-remy-martin-v-s-o-p-0-03",
     "categorySr": "Brandy",
     "categoryEn": "Brandy",
@@ -1471,7 +1801,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 390
+    "price": 440
   },
   {
     "id": "whiskey-gentleman-jack-0-03",
@@ -1482,7 +1812,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 470
+    "price": 530
   },
   {
     "id": "whiskey-jack-daniel-s-single-barrel-0-03",
@@ -1493,7 +1823,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 590
+    "price": 640
   },
   {
     "id": "whiskey-johnnie-walker-red-label-0-03",
@@ -1537,7 +1867,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 350
+    "price": 390
   },
   {
     "id": "zestoka-alkoholna-pica-vodka-smirnof-0-03",
@@ -1548,7 +1878,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 350
+    "price": 390
   },
   {
     "id": "zestoka-alkoholna-pica-tequila-0-03",
@@ -1559,7 +1889,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 350
+    "price": 390
   },
   {
     "id": "zestoka-alkoholna-pica-gin-beefeater-0-03",
@@ -1570,7 +1900,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 370
+    "price": 380
   },
   {
     "id": "zestoka-alkoholna-pica-gin-bombay-0-03",
@@ -1581,7 +1911,7 @@
     "descriptionSr": null,
     "descriptionEn": null,
     "quantity": "0.03",
-    "price": 380
+    "price": 390
   },
   {
     "id": "zestoka-alkoholna-pica-rum-bacardi-carta-blanca-0-03",
@@ -1622,21 +1952,10 @@
     "categoryEn": "Cocktails",
     "nameSr": "Lavander Gin Tonic",
     "nameEn": "Lavender Gin Tonic",
-    "descriptionSr": "Sirup od lavande, Gin, Tonic",
-    "descriptionEn": "Lavender syrup, gin, tonic",
+    "descriptionSr": "sirup od lavande, gin, tonic",
+    "descriptionEn": "lavender syrup, gin, tonic",
     "quantity": "0.30",
     "price": 650
-  },
-  {
-    "id": "kokteli-prosecco-chambord-royale-0-20",
-    "categorySr": "Kokteli",
-    "categoryEn": "Cocktails",
-    "nameSr": "Prosecco Chambord Royale",
-    "nameEn": "Prosecco Chambord Royale",
-    "descriptionSr": "Prosecco, Chambord francuski liker od kupine",
-    "descriptionEn": "Prosecco, Chambord blackberry liqueur",
-    "quantity": "0.20",
-    "price": 790
   },
   {
     "id": "kokteli-tequila-sunrise-0-40",
@@ -1644,8 +1963,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Tequila Sunrise",
     "nameEn": "Tequila Sunrise",
-    "descriptionSr": "Grenadin, Tequila, Juice",
-    "descriptionEn": "Grenadine, tequila, juice",
+    "descriptionSr": "grenadin, tequila, juice",
+    "descriptionEn": "grenadine, tequila, juice",
     "quantity": "0.40",
     "price": 640
   },
@@ -1655,8 +1974,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Cosmopolitan",
     "nameEn": "Cosmopolitan",
-    "descriptionSr": "Limunov sok, sok od borovnice, Triple sec, Vodka",
-    "descriptionEn": "Lemon juice, blueberry juice, triple sec, vodka",
+    "descriptionSr": "limunov sok, sok od borovnice, triple sec, vodka",
+    "descriptionEn": "lemon juice, blueberry juice, triple sec, vodka",
     "quantity": "0.20",
     "price": 610
   },
@@ -1666,8 +1985,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Cuba Libre",
     "nameEn": "Cuba Libre",
-    "descriptionSr": "Coca Cola, Beli Rum, limunov sok",
-    "descriptionEn": "Coca-Cola, white rum, lemon juice",
+    "descriptionSr": "coca cola, beli rum, limunov sok",
+    "descriptionEn": "coca-cola, white rum, lemon juice",
     "quantity": "0.35",
     "price": 610
   },
@@ -1677,8 +1996,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Long Island Ice Tea",
     "nameEn": "Long Island Iced Tea",
-    "descriptionSr": "Vodka, Beli Rum, Triple sec, Tequila, Gin, limunov sok, Coca Cola",
-    "descriptionEn": "Vodka, white rum, triple sec, tequila, gin, lemon juice, Coca-Cola",
+    "descriptionSr": "vodka, beli rum, triple sec, tequila, gin, limunov sok, coca cola",
+    "descriptionEn": "vodka, white rum, triple sec, tequila, gin, lemon juice, coca-cola",
     "quantity": "0.40",
     "price": 710
   },
@@ -1688,8 +2007,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Hugo",
     "nameEn": "Hugo",
-    "descriptionSr": "Sirup do zove, Nana, Limeta, Prosecco, Soda voda",
-    "descriptionEn": "Elderflower syrup, mint, lime, Prosecco, soda",
+    "descriptionSr": "sirup do zove, nana, limeta, prosecco, soda voda",
+    "descriptionEn": "elderflower syrup, mint, lime, prosecco, soda",
     "quantity": "0.35",
     "price": 650
   },
@@ -1699,8 +2018,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Margarita",
     "nameEn": "Margarita",
-    "descriptionSr": "Sok od limete, Tequila, Triple sec",
-    "descriptionEn": "Lime juice, tequila, triple sec",
+    "descriptionSr": "sok od limete, tequila, triple sec",
+    "descriptionEn": "lime juice, tequila, triple sec",
     "quantity": "0.20",
     "price": 610
   },
@@ -1710,8 +2029,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Belini",
     "nameEn": "Bellini",
-    "descriptionSr": "Pire breskva, Prosecco",
-    "descriptionEn": "Peach purée, Prosecco",
+    "descriptionSr": "pire breskva, prosecco",
+    "descriptionEn": "peach purée, prosecco",
     "quantity": "0.20",
     "price": 610
   },
@@ -1721,8 +2040,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Rosini",
     "nameEn": "Rossini",
-    "descriptionSr": "Pire malina, Prosecco",
-    "descriptionEn": "Raspberry purée, Prosecco",
+    "descriptionSr": "pire malina, prosecco",
+    "descriptionEn": "raspberry purée, prosecco",
     "quantity": "0.20",
     "price": 610
   },
@@ -1732,8 +2051,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Negroni",
     "nameEn": "Negroni",
-    "descriptionSr": "Campari, Gin, Martini",
-    "descriptionEn": "Campari, gin, Martini",
+    "descriptionSr": "campari, gin, martini",
+    "descriptionEn": "campari, gin, martini",
     "quantity": "0.20",
     "price": 650
   },
@@ -1743,8 +2062,8 @@
     "categoryEn": "Cocktails",
     "nameSr": "Aperol Spritz",
     "nameEn": "Aperol Spritz",
-    "descriptionSr": "Aperol, Prosecco, Soda voda",
-    "descriptionEn": "Aperol, Prosecco, soda",
+    "descriptionSr": "aperol, prosecco, soda voda",
+    "descriptionEn": "aperol, prosecco, soda",
     "quantity": "0.35",
     "price": 650
   },
@@ -1754,9 +2073,75 @@
     "categoryEn": "Cocktails",
     "nameSr": "Campari Spritz",
     "nameEn": "Campari Spritz",
-    "descriptionSr": "Campari, Prosecco, Soda voda",
-    "descriptionEn": "Campari, Prosecco, soda",
+    "descriptionSr": "campari, prosecco, soda voda",
+    "descriptionEn": "campari, prosecco, soda",
     "quantity": "0.35",
     "price": 650
+  },
+  {
+    "id": "kokteli-mimosa-0-20",
+    "categorySr": "Kokteli",
+    "categoryEn": "Cocktails",
+    "nameSr": "Mimosa",
+    "nameEn": "Mimosa",
+    "descriptionSr": "prosecco, ceđena pomorandža",
+    "descriptionEn": "prosecco, fresh orange juice",
+    "quantity": "0.20",
+    "price": 690
+  },
+  {
+    "id": "kokteli-skinny-bitch-0-35",
+    "categorySr": "Kokteli",
+    "categoryEn": "Cocktails",
+    "nameSr": "Skinny Bitch",
+    "nameEn": "Skinny Bitch",
+    "descriptionSr": "vodka, soda voda, limunov sok",
+    "descriptionEn": "vodka, soda water, lemon juice",
+    "quantity": "0.35",
+    "price": 690
+  },
+  {
+    "id": "kokteli-mai-tai-0-40",
+    "categorySr": "Kokteli",
+    "categoryEn": "Cocktails",
+    "nameSr": "Mai Tai",
+    "nameEn": "Mai Tai",
+    "descriptionSr": "beli rum, crni rum, triple sec, amaretto, sok od limete",
+    "descriptionEn": "white rum, dark rum, triple sec, amaretto, lime juice",
+    "quantity": "0.40",
+    "price": 790
+  },
+  {
+    "id": "kokteli-sex-on-the-beach-0-40",
+    "categorySr": "Kokteli",
+    "categoryEn": "Cocktails",
+    "nameSr": "Sex on the Beach",
+    "nameEn": "Sex on the Beach",
+    "descriptionSr": "vodka, sok od brusnice, sok od pomorandže, sirup od breskve",
+    "descriptionEn": "vodka, cranberry juice, orange juice, peach syrup",
+    "quantity": "0.40",
+    "price": 690
+  },
+  {
+    "id": "kokteli-gin-rickey-0-35",
+    "categorySr": "Kokteli",
+    "categoryEn": "Cocktails",
+    "nameSr": "Gin Rickey",
+    "nameEn": "Gin Rickey",
+    "descriptionSr": "gin, sok od limete, soda voda",
+    "descriptionEn": "gin, lime juice, soda water",
+    "quantity": "0.35",
+    "price": 690
+  },
+  {
+    "id": "kokteli-cuban-mojito-0-40",
+    "categorySr": "Kokteli",
+    "categoryEn": "Cocktails",
+    "nameSr": "Cuban Mojito",
+    "nameEn": "Cuban Mojito",
+    "descriptionSr": "beli rum, sveža nana, sok od limete, beli šećer, soda voda",
+    "descriptionEn": "white rum, fresh mint, lime juice, white sugar, soda water",
+    "quantity": "0.40",
+    "price": 690
   }
 ]

@@ -63,5 +63,10 @@
     "order": 13,
     "sr": "Grickalice",
     "en": "Snacks"
+  },
+  {
+    "order": 14,
+    "sr": "Tost sendviči",
+    "en": "Toast sandwiches"
   }
 ]
