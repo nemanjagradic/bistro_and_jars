@@ -1,37 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bistro & Jars Coffee Bar
 
-## Getting Started
+A presentation website for Bistro & Jars Coffee Bar in Novi Beograd. Visitors explore the café in Serbian or English, and can send an inquiry or a celebration request, with a WhatsApp notification to the café and the guest.
 
-First, run the development server:
+Built with Next.js 16 (App Router), TypeScript, and Tailwind CSS.
+
+Live Demo: [bistroandjars.com](https://bistroandjars.com)
+
+## Features
+
+- Home with scroll-driven hero and signature-drink sequence
+- Gallery and full menu (`/menu` is the QR landing page)
+- Contact form for inquiries and celebration requests
+- Serbian and English, without language-prefixed URLs
+- WhatsApp Cloud API messages to the owner and a confirmation to the guest
+- Rate limiting with Upstash Redis
+- Privacy and terms pages, and a branded 404
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router), React 19, TypeScript 5
+- **UI:** Tailwind CSS 4
+- **Motion:** GSAP + ScrollTrigger
+- **Forms:** Meta WhatsApp Cloud API
+- **Rate limiting:** Upstash Redis
+- **Hosting:** Vercel
+
+## Installation & Usage
+
+Requires Node.js 20 or newer.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/bistroandjarsweb/bistro_and_jars.git
+cd bistro_and_jars
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up environment variables
+
+Create a `.env.local` file in the root:
+
+```bash
+# WhatsApp
+WHATSAPP_TOKEN=
+WHATSAPP_PHONE_NUMBER_ID=
+WHATSAPP_API_VERSION=v25.0
+OWNER_WHATSAPP_E164=
+GUEST_CONFIRMATION_ENABLED=true
+WHATSAPP_FALLBACK_E164=
+
+# Upstash
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+```
+
+### 4. Run in development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 5. Build and run in production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-"# bistro_and_jars" 
+Deployed on Vercel at [bistroandjars.com](https://bistroandjars.com).
